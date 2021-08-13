@@ -17,14 +17,14 @@ const Categories = [
 ];
 
 const Operations = [
-    { monto: 1200, concepto: "Burguer", tipo:"Egreso", userId: 1, categoryId: 1 },
-    { monto: 500, concepto: "Trabajo", tipo:"Ingreso", userId: 1, categoryId: 3 },
-    { monto: 100, concepto: "Sube", tipo:"Egreso", userId: 1, categoryId: 2 },
-    { monto: 1200, concepto: "Burguer", tipo:"Egreso", userId: 2, categoryId: 1 },
-    { monto: 6000, concepto: "Salario", tipo:"Ingreso", userId: 2, categoryId: 3 },
-    { monto: 1200, concepto: "Burguer", tipo:"Egreso", userId: 3, categoryId: 1 },
-    { monto: 500, concepto: "Trabajo", tipo:"Ingreso", userId: 3, categoryId: 3 },
-    { monto: 100, concepto: "Sube", tipo:"Egreso", userId: 3, categoryId: 2 },
+    { amount: 1200, concept: "Burguer", type:"Egreso", userId: 1, categoryId: 1 },
+    { amount: 500, concept: "Trabajo", type:"Ingreso", userId: 1, categoryId: 3 },
+    { amount: 100, concept: "Sube", type:"Egreso", userId: 1, categoryId: 2 },
+    { amount: 1200, concept: "Burguer", type:"Egreso", userId: 2, categoryId: 1 },
+    { amount: 6000, concept: "Salario", type:"Ingreso", userId: 2, categoryId: 3 },
+    { amount: 1200, concept: "Burguer", type:"Egreso", userId: 3, categoryId: 1 },
+    { amount: 500, concept: "Trabajo", type:"Ingreso", userId: 3, categoryId: 3 },
+    { amount: 100, concept: "Sube", type:"Egreso", userId: 3, categoryId: 2 },
 ];
 
 sequelize

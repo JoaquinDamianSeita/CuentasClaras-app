@@ -6,7 +6,7 @@ const Category = require("../../database/models/Category");
 router.get("/:userId", async (req, res) => {
   const operations = await Operation.findAll({
     where: {userId: req.params.userId},
-    attributes: ["monto", "concepto", "tipo"],
+    attributes: ["amount", "concept", "type","id"],
     include: {
       model: Category,
       as: "category",
@@ -14,6 +14,19 @@ router.get("/:userId", async (req, res) => {
     },
   });
   res.json(operations);
+});
+
+router.get("/:userId/:operationId", async (req, res) => {
+  const operation = await Operation.findOne({
+    where: {userId: req.params.userId, id: req.params.operationId },
+    attributes: ["amount", "concept", "type","id"],
+    include: {
+      model: Category,
+      as: "category",
+      attributes: ["type"],
+    },
+  });
+  res.json(operation);
 });
 
 router.post("/", async (req, res) => {

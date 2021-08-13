@@ -3,10 +3,10 @@ const apiRouter = require("./routes/index");
 const sequelize = require("./database/db");
 const Models = require("./database/models/index");
 require("./database/associations");
-
-const PORT = process.env.PORT || 3000;
-
 require("dotenv").config();
+
+const PORT = process.env.PORT || 3001;
+
 
 const app = express();
 

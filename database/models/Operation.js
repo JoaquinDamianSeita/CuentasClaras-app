@@ -4,15 +4,15 @@ const sequelize = require("../db");
 class Operation extends Model {}
 Operation.init(
   {
-    monto: {
+    amount: {
       allowNull: false,
       type: DataTypes.DECIMAL(10, 2),
     },
-    concepto: {
+    concept: {
       allowNull: false,
       type: DataTypes.STRING,
     },
-    tipo: {
+    type: {
       allowNull: false,
       type: DataTypes.STRING,
     },
