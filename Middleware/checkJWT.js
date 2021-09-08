@@ -1,6 +1,8 @@
 const jwt = require("jwt-simple");
 const moment = require("moment");
 
+const {SECRET_JWT} = require("../config/globals");
+
 const checkToken = (req, res, next) => {
   if (!req.headers["user-token"]) {
     return res.json({
@@ -11,7 +13,7 @@ const checkToken = (req, res, next) => {
   const userToken = req.headers["user-token"];
   let payload = {};
   try {
-    payload = jwt.decode(userToken, process.env.SECRET_JWT);
+    payload = jwt.decode(userToken, SECRET_JWT);
   } catch (error) {
     return res.json({ error: "El token es incorrecto" });
   }

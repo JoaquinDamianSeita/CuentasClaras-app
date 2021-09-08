@@ -1,6 +1,6 @@
-const Category = require("./models/Category");
-const Operation = require("./models/Operation");
-const User = require("./models/User");
+const Category = require("../models/schemas/Category");
+const Operation = require("../models/schemas/Operation");
+const User = require("../models/schemas/User");
 
 
 User.hasMany(Operation, { as: "operations", foreignKey: "userId"});

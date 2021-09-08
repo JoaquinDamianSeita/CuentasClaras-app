@@ -3,13 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Table } from "react-bootstrap";
 import axios from "axios";
 import { removeOperation } from "../../actions";
-import OperationInfo from "./OperationInfo";
+import OperationEdit from "./OperationEdit";
 
 // import PostInfoModal from "./PostInfoModal";
-import { useAuth0 } from "@auth0/auth0-react";
 
 export default function OperationListTable() {
-  const [showInfo, setShowInfo] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const [tempOperationId, setTempOperationId] = useState("");
   const dispatch = useDispatch();
 
@@ -17,28 +16,21 @@ export default function OperationListTable() {
     return state.operations;
   });
 
-  const { getAccessTokenSilently } = useAuth0();
-
-  function handleCloseInfo() {
-    setShowInfo(false);
+  function handleCloseEdit() {
+    setShowEdit(false);
   }
 
-  function handleShowInfo(id) {
+  function handleShowEdit(id) {
     setTempOperationId(id);
-    setShowInfo(true);
+    setShowEdit(true);
   }
 
-  async function handleDelete(postId) {
-    const token = await getAccessTokenSilently();
-
+  async function handleDelete(operationId) {
     axios
-      .delete(`/api/posts/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .delete(`/api/operations/${operationId}`, {})
       .then(() => {
-        dispatch(removeOperation(postId));
+        dispatch(removeOperation(operationId));
+        window.location.reload();
       })
       .catch((error) => {
         console.log("error", error);
@@ -51,11 +43,11 @@ export default function OperationListTable() {
   return (
     <div>
       <div>
-        <OperationInfo
+        <OperationEdit
           operationId={tempOperationId}
-          isOpen={showInfo}
-          handleCloseInfo={handleCloseInfo}
-        ></OperationInfo>
+          isOpen={showEdit}
+          handleCloseEdit={handleCloseEdit}
+        ></OperationEdit>
       </div>
 
       <Table striped bordered hover variant="dark" className="operation-table">
@@ -71,30 +63,57 @@ export default function OperationListTable() {
         <tbody>
           {operations.length &&
             operations.map((operation) => {
-              return (
-                <tr key={operation.id}>
-                  <td>{operation.type}</td>
-                  <td>{operation.concept}</td>
-                  <td>{operation.category.type}</td>
-                  <td>{operation.amount}$</td>
-                  <td>
-                    <div className="btn-group">
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => handleShowInfo(String(operation.id))}
-                      >
-                        Info
-                      </button>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleDelete(String(operation.id))}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
+              if (operation.type === "Egreso") {
+                return (
+                  <tr key={operation.id}>
+                    <td>{operation.type}</td>
+                    <td>{operation.concept}</td>
+                    <td>{operation.category.type}</td>
+                    <td style={{color: "#da222b"}}>-${operation.amount}</td>
+                    <td>
+                      <div className="btn-group">
+                        <button
+                          className="btn btn-warning btn-sm"
+                          onClick={() => handleShowEdit(String(operation.id))}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleDelete(String(operation.id))}
+                        >
+                          Borrar
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              } else {
+                return (
+                  <tr key={operation.id}>
+                    <td>{operation.type}</td>
+                    <td>{operation.concept}</td>
+                    <td>{operation.category.type}</td>
+                    <td style={{color: "#58b324"}}>${operation.amount}</td>
+                    <td>
+                      <div className="btn-group">
+                        <button
+                          className="btn btn-warning btn-sm"
+                          onClick={() => handleShowEdit(String(operation.id))}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleDelete(String(operation.id))}
+                        >
+                          Borrar
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              }
             })}
         </tbody>
       </Table>

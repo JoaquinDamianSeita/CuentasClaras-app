@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../db");
+const sequelize = require("../../db/db");
 
 class Operation extends Model {}
 Operation.init(

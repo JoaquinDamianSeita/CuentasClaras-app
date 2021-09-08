@@ -14,6 +14,14 @@
   color: #dadada;
 }
 
+.td-egreso {
+  color: #da222b;
+}
+
+.td-ingreso {
+  background-color: #58b324;
+}
+
 
 .close ::before {
   content: "X";

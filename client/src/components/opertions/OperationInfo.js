@@ -3,14 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { Form, Modal } from "react-bootstrap";
 
-import { useAuth0 } from "@auth0/auth0-react";
-
 import { setOperation, removeOperation } from "../../actions";
+
+import OperationEdit from "./OperationEdit";
 
 export default function OperationInfo(props) {
   const [open, setOpen] = useState(props.isOpen);
   const [showEdit, setShowEdit] = useState(false);
-  const [tempPostId, setTempPostId] = useState("");
+  const [tempOperationId, setTempOperationId] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,7 +35,6 @@ export default function OperationInfo(props) {
 
   const operation = useSelector((state) => state.operation);
 
-  const { getAccessTokenSilently } = useAuth0();
   const userId = 1;
 
   function handleCloseEdit() {
@@ -43,7 +42,7 @@ export default function OperationInfo(props) {
   }
 
   function handleShowEdit(id) {
-    setTempPostId(id);
+    setTempOperationId(id);
     setShowEdit(true);
   }
 
@@ -75,13 +74,20 @@ export default function OperationInfo(props) {
 
   return (
     <div>
+      <div>
+        <OperationEdit
+          operationId={tempOperationId}
+          isOpen={showEdit}
+          handleCloseEdit={handleCloseEdit}
+        ></OperationEdit>
+      </div>
+
       {operation.type && (
         <Modal
           show={open}
           onHide={props.handleCloseInfo}
           backdrop="static"
           keyboard={false}
-          
         >
           <Modal.Header closeButton className="background-black">
             <Modal.Title>{operation.type}</Modal.Title>
@@ -91,10 +97,7 @@ export default function OperationInfo(props) {
             <Form>
               <Form.Group>
                 <Form.Label>Concepto:</Form.Label>
-                <Form.Control
-                  value={operation.concept}
-                  readOnly
-                ></Form.Control>
+                <Form.Control value={operation.concept} readOnly></Form.Control>
               </Form.Group>
 
               <Form.Group>
@@ -107,14 +110,17 @@ export default function OperationInfo(props) {
 
               <Form.Group>
                 <Form.Label>Monto:</Form.Label>
-                <Form.Control value={operation.amount} readOnly></Form.Control>
+                <Form.Control
+                  value={"$" + operation.amount}
+                  readOnly
+                ></Form.Control>
               </Form.Group>
             </Form>
 
             <div className="btn-group mt-3 mx-5 d-flex justify-content-center">
               <button
                 className="btn btn-warning"
-                onClick={() => handleShowEdit(String(props.postId))}
+                onClick={() => handleShowEdit(String(props.operationId))}
               >
                 Editar
               </button>

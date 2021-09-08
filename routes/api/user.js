@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 const  User  = require("../../database/models/User");
 const  Operation  = require("../../database/models/Operation");
-const  Category  = require("../../database/models/Category");
+const  Category  = require("../../database/models/schemas/Category");
 const moment = require("moment");
 const jwt = require("jwt-simple");
 
@@ -24,6 +24,7 @@ router.get("/listUsers", async (req, res) => {
     });
     res.json(data);
 });
+
 
 router.post(
   "/register",

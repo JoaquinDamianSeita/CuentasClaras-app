@@ -1,9 +1,9 @@
-require("dotenv").config();
+const {DB_PASSWORD} = require("../../config/globals");
 
 module.exports = {
     database: {
         username: "root",
-        password: process.env.DB_PASSWORD,
+        password: DB_PASSWORD,
         database: "alkemy_test",
         host: "localhost"
     }
