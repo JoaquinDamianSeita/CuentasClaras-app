@@ -1,5 +1,4 @@
-*implementar en el dao,service y controller la ruta del balance por cada usuario
-*implementar sistema de detectar errores dentro de los dao, services y controller
+*crear controller de los user
 *realizar las validaciones en el front de lo que recibe el back
 *modificar los valores enviados con las peticiones de axios para que envien los params en el tercer argumento
 *asegurarse de que en el update de las operaciones enviemos el id en el body de la operacion

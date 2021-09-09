@@ -27,7 +27,6 @@ class OperationController {
       }
 
       let operations = await operationService.allOperations(req.params.userId);
-
       res.status(200).json(operations);
     } catch (error) {
       res.status(404).json({ error: error.message });
@@ -41,8 +40,19 @@ class OperationController {
       const { userId, operationId } = req.params;
 
       let operation = await operationService.oneOperation(userId, operationId);
-
       res.status(200).json(operation);
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  }
+  async controllerOperationRB(req, res, next) {
+    try {
+      if (!req.params.userId) {
+        throw new Error("Debes proporcionar un userId");
+      }
+
+      let balance = await operationService.balanceOperations(req.params.userId);
+      res.status(200).json(balance);
     } catch (error) {
       res.status(404).json({ error: error.message });
     }
@@ -66,7 +76,9 @@ class OperationController {
         throw new Error("Debes proporcionar un id de la operación");
       }
 
-      let operation = await operationService.deleteOperation(req.params.operationId);
+      let operation = await operationService.deleteOperation(
+        req.params.operationId
+      );
 
       res.status(200).json(operation);
     } catch (error) {
