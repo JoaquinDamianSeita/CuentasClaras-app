@@ -50,12 +50,12 @@ class operationDAO {
     }
   }
 
-  async updateOperation({ amount, concept, selectedOperationId }) {
+  async updateOperation({ amount, concept, id }) {
     try {
       await operationModel.update(
         { amount, concept },
         {
-          where: { id: selectedOperationId },
+          where: { id: id  },
         }
       );
       return "Modificado con exito!";
@@ -64,13 +64,14 @@ class operationDAO {
     }
   }
 
-  async deleteOperation({ selectedOperationId }) {
+  async deleteOperation( selectedOperationId ) {
     try {
-      await Operation.destroy({
+      await operationModel.destroy({
         where: { id: selectedOperationId },
       });
       return "Eliminado con exito";
     } catch (error) {
+      console.log("error en el dao");
       console.log(error);
     }
   }

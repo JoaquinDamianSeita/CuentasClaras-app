@@ -1,5 +1,5 @@
 const sequelize = require("./db");
-const Models = require("../models/index");
+const Models = require("../models/schemas/index");
 require("./associations");
 
 

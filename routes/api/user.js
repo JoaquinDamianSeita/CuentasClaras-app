@@ -1,9 +1,13 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
-const  User  = require("../../database/models/User");
-const  Operation  = require("../../database/models/Operation");
+
+
+const  User  = require("../../database/models/schemas/User");
+const  Operation  = require("../../database/models/schemas/Operation");
 const  Category  = require("../../database/models/schemas/Category");
+
+
 const moment = require("moment");
 const jwt = require("jwt-simple");
 
