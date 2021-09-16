@@ -1,14 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import OperationAdd from "../opertions/OperationAdd";
 
 const Hero = () => {
-
   const [userBalance, setUserBalance] = useState("");
   const userId = 1;
 
+  const [openAdd, setOpenAdd] = useState(false);
+
+  function handleCloseAdd() {
+    setOpenAdd(false);
+  }
+  
+  function handleOpenAdd() {
+    setOpenAdd(true);
+  }
+
+
   useEffect(() => {
-    axios.get(`/api/operations/balance/${userId}`)
-      .then( (response) => {
+    axios
+      .get(`/api/operations/balance/${userId}`)
+      .then((response) => {
         setUserBalance(response.data);
       })
       .catch(function (err) {
@@ -33,6 +45,16 @@ const Hero = () => {
 
       <h3 className="mb-2">Saldo en la cuenta:</h3>
       <h1 className="mb-4">${userBalance}</h1>
+
+      <button className="btn btn-primary btn-lg" onClick={handleOpenAdd}>
+        Agregar Operación
+      </button>
+      <div>
+        <OperationAdd
+          isOpen={openAdd}
+          handleCloseAdd={handleCloseAdd}
+        ></OperationAdd>
+      </div>
 
       <hr />
     </div>

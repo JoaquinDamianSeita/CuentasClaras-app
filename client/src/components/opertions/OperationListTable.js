@@ -16,6 +16,11 @@ export default function OperationListTable() {
     return state.operations;
   });
 
+
+  useEffect(() => {
+    console.table(operations);
+  }, [operations]);
+
   function handleCloseEdit() {
     setShowEdit(false);
   }
@@ -69,7 +74,7 @@ export default function OperationListTable() {
                     <td>{operation.type}</td>
                     <td>{operation.concept}</td>
                     <td>{operation.category.type}</td>
-                    <td style={{color: "#da222b"}}>-${operation.amount}</td>
+                    <td style={{ color: "#da222b" }}>-${operation.amount}</td>
                     <td>
                       <div className="btn-group">
                         <button
@@ -94,7 +99,7 @@ export default function OperationListTable() {
                     <td>{operation.type}</td>
                     <td>{operation.concept}</td>
                     <td>{operation.category.type}</td>
-                    <td style={{color: "#58b324"}}>${operation.amount}</td>
+                    <td style={{ color: "#58b324" }}>${operation.amount}</td>
                     <td>
                       <div className="btn-group">
                         <button

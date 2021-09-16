@@ -22,7 +22,7 @@ export default function OperationInfo(props) {
       //   }
       // }
       axios
-        .get(`/api/operations/${userId}/${props.operationId}`)
+        .get(`/api/operations/oneOperation/${userId}/${props.operationId}`)
         .then((response) => {
           dispatch(setOperation(response.data));
           changeOperation(response.data);
@@ -49,11 +49,13 @@ export default function OperationInfo(props) {
     event.preventDefault();
 
     axios
-      .put(`/api/operations/${props.operationId}`, {
+      .put(`/api/operations/${props.operationId}`, 
+      {
         data: {
           amount: operation.amount,
           concept: operation.concept,
-        },
+          id: props.operationId
+        }
       })
       .then(() => {
         dispatch(setOperation(operation));

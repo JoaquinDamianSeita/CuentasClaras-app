@@ -6,16 +6,18 @@ class OperationController {
   async controllerOperationCR(req, res, next) {
     try {
       if (
-        !req.body.amount ||
-        !req.body.concept ||
-        !req.body.type ||
-        !req.body.userId ||
-        !req.body.categoryId
+        !req.body.data.amount ||
+        !req.body.data.concept ||
+        !req.body.data.type ||
+        !req.body.data.userId ||
+        !req.body.data.categoryId
       ) {
         throw new Error("Hay campos vacios en la creación!");
       }
-      let createdOperation = await operationService.createOperation(req.body);
-      res.status(200).json(createdOperation);
+      let createdOperation = await operationService.createOperation(req.body.data);
+      let responseOperation = await operationService.oneOperation(createdOperation.userId, createdOperation.id);
+
+      res.status(200).json(responseOperation);
     } catch (error) {
       res.status(404).json({ error: error.message });
     }
@@ -59,12 +61,12 @@ class OperationController {
   }
   async controllerOperationU(req, res, next) {
     try {
-      if (!req.body.id) {
+      if (!req.body.data.id) {
         throw new Error("Debes proporcionar un id de la operación");
       }
+      let operation = await operationService.updateOperation(req.body.data);
 
-      let operation = await operationService.updateOperation(req.body);
-
+      
       res.status(200).json(operation);
     } catch (error) {
       res.status(404).json({ error: error.message });

@@ -10,7 +10,6 @@ const {
 } = require("../../database/controller/operation");
 
 
-
 router
   .get("/allOperations/:userId", controllerOperationRA)
   .get("/oneOperation/:userId/:operationId", controllerOperationRO)

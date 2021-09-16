@@ -15,6 +15,7 @@ class operationDAO {
       if (operation.length === 0) {
         throw new Error(`Fallo al guardar`);
       }
+
       return operation;
     } catch (error) {
       throw new Error(`Ocurrio un error en el DAO Create ${error}`);
@@ -69,7 +70,7 @@ class operationDAO {
   }
   async oneOperation(selectedUserId, selectedOperationId) {
     try {
-      const operation = await await operationModel.findOne({
+      const operation = await operationModel.findOne({
         where: { userId: selectedUserId, id: selectedOperationId },
         attributes: ["amount", "concept", "type", "id"],
         include: {
@@ -90,6 +91,8 @@ class operationDAO {
   }
   async updateOperation({ amount, concept, id }) {
     try {
+
+      console.log(amount, concept, id + "esto llega al dao update");
       await operationModel.update(
         { amount, concept },
         {

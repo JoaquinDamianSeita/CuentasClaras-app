@@ -19,9 +19,8 @@ export const REPLACE_OPERATION = "REPLACE_OPERATION";
 export function setOperations(userId) {
   userId=1;
   return function (dispatch) {
-    return get(`/api/operations/${userId}`)
+    return get(`/api/operations/allOperations/${userId}`)
       .then(function (response) {
-        console.table(response.data);
         dispatch({ type: SET_OPERATIONS, operations: response.data });
       })
       .catch(function (err) {

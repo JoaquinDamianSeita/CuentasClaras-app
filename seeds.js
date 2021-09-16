@@ -1,8 +1,8 @@
-const sequelize = require("./database/db");
-const User = require("./database/models/User");
-const Operation = require("./database/models/Operation");
-const Category = require("./database/models/Category");
-require("./database/associations");
+const sequelize = require("./database/db/db");
+const User = require("./database/models/schemas/User");
+const Operation = require("./database/models/schemas/Operation");
+const Category = require("./database/models/schemas/Category");
+require("./database/db/associations");
 
 const Users = [
     { username: "Joaquin", email: "joaquin@mail.com", password: "qwerty" },
@@ -11,9 +11,20 @@ const Users = [
 ];
 
 const Categories = [
-    { type: "Comida" },
+    { type: "Alimentación" },
     { type: "Transporte" },
-    { type: "Trabajo" },
+    { type: "Educación"},
+    { type: "Entretenimiento"},
+    { type: "Facturas"},
+    { type: "Hogar"},
+    { type: "Nafta"},
+    { type: "Ropa"},
+    { type: "Salud"},
+    { type: "Inversiones"},
+    { type: "Otros"},
+    { type: "Premios"},
+    { type: "Regalos"},
+    { type: "Sueldo"},
 ];
 
 const Operations = [
