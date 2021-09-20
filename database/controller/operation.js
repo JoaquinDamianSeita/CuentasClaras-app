@@ -9,13 +9,30 @@ class OperationController {
         !req.body.data.amount ||
         !req.body.data.concept ||
         !req.body.data.type ||
-        !req.body.data.userId ||
+        !req.usuarioId ||
         !req.body.data.categoryId
       ) {
         throw new Error("Hay campos vacios en la creación!");
       }
-      let createdOperation = await operationService.createOperation(req.body.data);
-      let responseOperation = await operationService.oneOperation(createdOperation.userId, createdOperation.id);
+
+      const sendOperation = {
+        amount: req.body.data.amount,
+        concept: req.body.data.concept,
+        type: req.body.data.type,
+        userId: req.usuarioId,
+        categoryId: req.body.data.categoryId,
+      };
+
+      let createdOperation = await operationService.createOperation(
+        sendOperation
+      );
+
+      console.log(createdOperation);
+
+      let responseOperation = await operationService.oneOperation(
+        createdOperation.userId,
+        createdOperation.id
+      );
 
       res.status(200).json(responseOperation);
     } catch (error) {
@@ -24,11 +41,11 @@ class OperationController {
   }
   async controllerOperationRA(req, res, next) {
     try {
-      if (!req.params.userId) {
+      if (!req.usuarioId) {
         throw new Error("Debes proporcionar un userId");
       }
 
-      let operations = await operationService.allOperations(req.params.userId);
+      let operations = await operationService.allOperations(req.usuarioId);
       res.status(200).json(operations);
     } catch (error) {
       res.status(404).json({ error: error.message });
@@ -49,11 +66,11 @@ class OperationController {
   }
   async controllerOperationRB(req, res, next) {
     try {
-      if (!req.params.userId) {
+      if (!req.usuarioId) {
         throw new Error("Debes proporcionar un userId");
       }
 
-      let balance = await operationService.balanceOperations(req.params.userId);
+      let balance = await operationService.balanceOperations(req.usuarioId);
       res.status(200).json(balance);
     } catch (error) {
       res.status(404).json({ error: error.message });
@@ -66,7 +83,6 @@ class OperationController {
       }
       let operation = await operationService.updateOperation(req.body.data);
 
-      
       res.status(200).json(operation);
     } catch (error) {
       res.status(404).json({ error: error.message });

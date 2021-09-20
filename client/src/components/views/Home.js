@@ -1,12 +1,12 @@
 import React, { Fragment, useState } from "react";
 
 import Hero from "../misc/Hero";
-import OperationListTable from "../opertions/OperationListTable";
+import OperationTableHome from "../operations/OperationTableHome";
 
 const Home = () => (
   <Fragment>
     <Hero />
-    <OperationListTable/>
+    <OperationTableHome />
   </Fragment>
 );
 

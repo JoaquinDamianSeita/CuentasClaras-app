@@ -1,26 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import OperationAdd from "../opertions/OperationAdd";
+import { getToken, getUserName } from "../../auth/auth-helper";
 
 const Hero = () => {
   const [userBalance, setUserBalance] = useState("");
-  const userId = 1;
-
-  const [openAdd, setOpenAdd] = useState(false);
-
-  function handleCloseAdd() {
-    setOpenAdd(false);
-  }
+  const userName = getUserName();
   
-  function handleOpenAdd() {
-    setOpenAdd(true);
-  }
-
+  const userToken = getToken();
 
   useEffect(() => {
     axios
-      .get(`/api/operations/balance/${userId}`)
+      .get(`/api/operations/balance/`, {
+        headers: {
+          Authorization: userToken,
+        },
+      })
       .then((response) => {
+        console.log(response.data);
         setUserBalance(response.data);
       })
       .catch(function (err) {
@@ -36,7 +32,7 @@ const Hero = () => {
         alt="Blog logo"
         width="120"
       />
-      <h1 className="mb-4">Bienvenido user.name!</h1>
+      <h1 className="mb-4">Bienvenido {userName}!</h1>
 
       <small className="lead mb-2">
         ¿No sos user.name? Para iniciar sesión con otro usuario click{" "}
@@ -45,16 +41,6 @@ const Hero = () => {
 
       <h3 className="mb-2">Saldo en la cuenta:</h3>
       <h1 className="mb-4">${userBalance}</h1>
-
-      <button className="btn btn-primary btn-lg" onClick={handleOpenAdd}>
-        Agregar Operación
-      </button>
-      <div>
-        <OperationAdd
-          isOpen={openAdd}
-          handleCloseAdd={handleCloseAdd}
-        ></OperationAdd>
-      </div>
 
       <hr />
     </div>

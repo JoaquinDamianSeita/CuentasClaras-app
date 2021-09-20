@@ -36,7 +36,12 @@ class UserController {
         const iguales = await bcrypt.compare(req.body.password, user.password);
 
         if (iguales) {
-          res.status(200).json({ success: await jwtTools.createToken(user) });
+          res
+            .status(200)
+            .json({
+              Token: await jwtTools.createToken(user),
+              Username: user.username,
+            });
         } else {
           res.status(401).json({ error: "Error en usuario y/o contraseña" });
         }

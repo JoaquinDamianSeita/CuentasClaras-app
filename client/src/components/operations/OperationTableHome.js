@@ -1,0 +1,53 @@
+import { React, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Table } from "react-bootstrap";
+
+export default function OperationCards() {
+  const operations = useSelector((state) => {
+    return state.operations;
+  });
+
+  useEffect(() => {
+    console.table(operations);
+  }, [operations]);
+
+
+  return (
+    <div>
+      <Table striped bordered hover variant="dark" className="operation-table-home">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Concepto</th>
+            <th>Categoría</th>
+            <th>Monto</th>
+          </tr>
+        </thead>
+        <tbody>
+          {operations.length &&
+            operations.slice(0,9).map((operation) => {
+              if (operation.type === "Egreso") {
+                return (
+                  <tr key={operation.id}>
+                    <td>{operation.type}</td>
+                    <td>{operation.concept}</td>
+                    <td>{operation.category.type}</td>
+                    <td style={{ color: "#da222b" }}>-${operation.amount}</td>
+                  </tr>
+                );
+              } else {
+                return (
+                  <tr key={operation.id}>
+                    <td>{operation.type}</td>
+                    <td>{operation.concept}</td>
+                    <td>{operation.category.type}</td>
+                    <td style={{ color: "#58b324" }}>${operation.amount}</td>
+                  </tr>
+                );
+              }
+            })}
+        </tbody>
+      </Table>
+    </div>
+  );
+}

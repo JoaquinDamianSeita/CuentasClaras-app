@@ -8,7 +8,7 @@ class jwtTools {
       const payload = {
         usuarioId: user.id,
         createdAt: moment().unix(),
-        expiredAt: moment().add(5, "minutes").unix(),
+        expiredAt: moment().add(60, "minutes").unix(),
       };
 
       const jwtCreated = jwt.encode(payload, SECRET_JWT);

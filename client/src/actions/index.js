@@ -1,11 +1,11 @@
 import { get } from "axios";
+import { getToken } from "../auth/auth-helper";
 
 export const SET_POSTS = "SET_POSTS";
 export const ADD_POST = "ADD_POST";
 export const SET_POST = "SET_POST";
 export const REMOVE_POST = "REMOVE_POST";
 export const REPLACE_POST = "REPLACE_POST";
-
 
 export const SET_OPERATIONS = "SET_OPERATIONS";
 export const ADD_OPERATION = "ADD_OPERATION";
@@ -14,12 +14,15 @@ export const REMOVE_OPERATION = "REMOVE_OPERATION";
 export const REPLACE_OPERATION = "REPLACE_OPERATION";
 
 
-
 //operations
 export function setOperations(userId) {
-  userId=1;
+  const userToken = getToken();
   return function (dispatch) {
-    return get(`/api/operations/allOperations/${userId}`)
+    return get(`/api/operations/allOperations/`, {
+      headers: {
+        Authorization: userToken,
+      },
+    })
       .then(function (response) {
         dispatch({ type: SET_OPERATIONS, operations: response.data });
       })

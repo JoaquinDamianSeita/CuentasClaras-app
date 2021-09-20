@@ -4,14 +4,15 @@ import axios from "axios";
 import { addOperation } from "../../actions";
 import { Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { getToken } from "../../auth/auth-helper";
 
 export default function OperationAdd(props) {
+  const userToken = getToken();
   const history = useHistory();
   let initialState = {
     amount: 0,
     concept: "",
     type: "null",
-    userId: 1,
     categoryId: 0,
   };
 
@@ -87,29 +88,31 @@ export default function OperationAdd(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    // {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   }
+    console.log(userToken);
 
     if (
       operation.amount &&
       operation.concept &&
       operation.type &&
-      operation.userId &&
       operation.categoryId
     ) {
       return axios
-        .post("/api/operations", {
-          data: {
-            amount: operation.amount,
-            concept: operation.concept,
-            type: operation.type,
-            userId: operation.userId,
-            categoryId: operation.categoryId,
+        .post(
+          "/api/operations",
+          {
+            data: {
+              amount: operation.amount,
+              concept: operation.concept,
+              type: operation.type,
+              categoryId: operation.categoryId,
+            },
           },
-        })
+          {
+            headers: {
+              Authorization: userToken,
+            },
+          }
+        )
         .then((response) => {
           dispatch(addOperation(response.data));
           props.handleCloseAdd();

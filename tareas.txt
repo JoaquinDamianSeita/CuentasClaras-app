@@ -1,14 +1,22 @@
 *FRONTEND
 
-*Estructurar el home y el abm operaciones.
-*El home debe mostrar el saldo y las ultimas 10 operaciones.
-*El ABM debe mostrar todo el listado con editar,eliminar y crear.
-*El ABM debe tener filtros de las operaciones(prioridad categoria).
+*Implementar el envio del token en todas las peticiones de la app.
+*hacer los desvios cuando la operacion no esta autorizada.
+*Mudar el formulario de registro a la pagina de login.
+*Implementar el cerrar sesion.
+
+
 *Estructurar el formulario de login y registro de los usuarios(Modal).
-*realizar las validaciones en el front de lo que recibe el back.
+*Implementar el registo y login de los usuarios desde el front.
+*El ABM debe tener filtros de las operaciones(prioridad categoria).
+*Realizar las validaciones en el front de lo que recibe el back.
 *Hacer el diseño responsive para celular y tablet tambien.
 
 *BACKEND 
 
 *Agregar los filtros a la ruta de las operaciones llegaran por query(prioridad categoria).
+*Arreglar las rutas para que acepten y manejen bien el token.
+
+
+
 

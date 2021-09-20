@@ -13,7 +13,6 @@ import rootReducer from "./reducers";
 import { setOperations } from "./actions";
 
 import { BrowserRouter as Router } from "react-router-dom";
-import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
 
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 

@@ -1,16 +1,16 @@
 const jwt = require("jwt-simple");
 const moment = require("moment");
 
-const {SECRET_JWT} = require("../config/globals");
+const { SECRET_JWT } = require("../config/globals");
 
 const checkToken = (req, res, next) => {
-  if (!req.headers["user-token"]) {
+  if (!req.headers["authorization"]) {
     return res.json({
       error: "Necesitas incluir el user token en la cabecera",
     });
   }
 
-  const userToken = req.headers["user-token"];
+  const userToken = req.headers["authorization"];
   let payload = {};
   try {
     payload = jwt.decode(userToken, SECRET_JWT);
@@ -27,6 +27,4 @@ const checkToken = (req, res, next) => {
   next();
 };
 
-module.exports = {
-  checkToken: checkToken,
-};
+module.exports = checkToken;
