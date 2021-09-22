@@ -2,24 +2,46 @@ import { React, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Table } from "react-bootstrap";
 import axios from "axios";
-import { removeOperation } from "../../actions";
+import { removeOperation, setOperations } from "../../actions";
 import OperationEdit from "./OperationEdit";
+import { getToken, deleteToken } from "../../auth/auth-helper";
+import { useHistory } from "react-router-dom";
 
 // import PostInfoModal from "./PostInfoModal";
 
 export default function OperationListTable() {
   const [showEdit, setShowEdit] = useState(false);
   const [tempOperationId, setTempOperationId] = useState("");
+  const userToken = getToken();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const operations = useSelector((state) => {
     return state.operations;
   });
 
+  useEffect(() => {
+    axios
+      .get(`/api/operations/balance/`, {
+        headers: {
+          Authorization: userToken,
+        },
+      })
+      .then((response) => {
+        if (response.data.error){
+          alert("Ocurrio un error debes iniciar sesion nuevamente")
+          deleteToken();
+          history.push("/login");
+        }
+      })
+      .catch(function (err) {
+        console.log("error", err);
+      });
+  },[]);
 
   useEffect(() => {
-    console.table(operations);
-  }, [operations]);
+    dispatch(setOperations());
+  }, []);
 
   function handleCloseEdit() {
     setShowEdit(false);
@@ -32,8 +54,18 @@ export default function OperationListTable() {
 
   async function handleDelete(operationId) {
     axios
-      .delete(`/api/operations/${operationId}`, {})
-      .then(() => {
+      .delete(`/api/operations/${operationId}`, {
+        headers: {
+          Authorization: userToken,
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          console.log(response.data.error);
+          alert("Ocurrio un error debes iniciar sesion nuevamente");
+          deleteToken();
+          history.push("/login");
+        }
         dispatch(removeOperation(operationId));
         window.location.reload();
       })

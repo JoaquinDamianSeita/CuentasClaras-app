@@ -2,34 +2,44 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { Form, Modal } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 import { setOperation, replaceOperation } from "../../actions";
+import { getToken, deleteToken } from "../../auth/auth-helper";
 
 export default function OperationInfo(props) {
   const [open, setOpen] = useState(props.isOpen);
-
   const initialState = useSelector((state) => state.operation);
   const [operation, changeOperation] = useState(initialState);
-  const userId = 1;
+  const userToken = getToken();
+  const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
     function traerOperation() {
-      // const token = await getAccessTokenSilently();
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   }
-      // }
-      axios
-        .get(`/api/operations/oneOperation/${userId}/${props.operationId}`)
-        .then((response) => {
-          dispatch(setOperation(response.data));
-          changeOperation(response.data);
-        })
-        .catch((error) => {
-          console.log(("error", error));
-        });
+      if (!props.operationId) {
+        console.log("Todavia no se selecciono una operacion");
+      } else {
+        axios
+          .get(`/api/operations/oneOperation/${props.operationId}`, {
+            headers: {
+              Authorization: userToken,
+            },
+          })
+          .then((response) => {
+            if (response.data.error) {
+              alert("Ocurrio un error debes iniciar sesion nuevamente");
+              deleteToken();
+              history.push("/login");
+            } else {
+              dispatch(setOperation(response.data));
+              changeOperation(response.data);
+            }
+          })
+          .catch((error) => {
+            console.log(("error", error));
+          });
+      }
     }
     traerOperation();
   }, [dispatch, props]);
@@ -49,18 +59,31 @@ export default function OperationInfo(props) {
     event.preventDefault();
 
     axios
-      .put(`/api/operations/${props.operationId}`, 
-      {
-        data: {
-          amount: operation.amount,
-          concept: operation.concept,
-          id: props.operationId
+      .put(
+        `/api/operations/${props.operationId}`,
+        {
+          data: {
+            amount: operation.amount,
+            concept: operation.concept,
+            id: props.operationId,
+          },
+        },
+        {
+          headers: {
+            Authorization: userToken,
+          },
         }
-      })
-      .then(() => {
-        dispatch(setOperation(operation));
-        dispatch(replaceOperation(operation));
-        window.location.reload();
+      )
+      .then((response) => {
+        if (response.data.error) {
+          alert("Ocurrio un error debes iniciar sesion nuevamente");
+          deleteToken();
+          history.push("/login");
+        } else {
+          dispatch(setOperation(operation));
+          dispatch(replaceOperation(operation));
+          window.location.reload();
+        }
       })
       .catch((error) => {
         console.log(error);

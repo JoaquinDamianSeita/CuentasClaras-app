@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import AuthenticationButton from "../auth/Authentication-button";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import LogoutButton from "../auth/Logout-button";
 
 export default function NavBarMain() {
   return (
@@ -40,7 +40,7 @@ export default function NavBarMain() {
               </NavLink>
             </li>
             <li className="nav-item px-1">
-              <AuthenticationButton />
+              <LogoutButton />
             </li>
           </ul>
         </Navbar.Collapse>

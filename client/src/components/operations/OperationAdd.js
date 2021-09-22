@@ -4,7 +4,7 @@ import axios from "axios";
 import { addOperation } from "../../actions";
 import { Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { getToken } from "../../auth/auth-helper";
+import { getToken, deleteToken } from "../../auth/auth-helper";
 
 export default function OperationAdd(props) {
   const userToken = getToken();
@@ -88,8 +88,6 @@ export default function OperationAdd(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log(userToken);
-
     if (
       operation.amount &&
       operation.concept &&
@@ -114,8 +112,14 @@ export default function OperationAdd(props) {
           }
         )
         .then((response) => {
-          dispatch(addOperation(response.data));
-          props.handleCloseAdd();
+          if (response.data.error) {
+            alert("Ocurrio un error debes iniciar sesion nuevamente");
+            deleteToken();
+            history.push("/login");
+          } else {
+            dispatch(addOperation(response.data));
+            props.handleCloseAdd();
+          }
         })
         .catch((err) => {
           console.log(err);

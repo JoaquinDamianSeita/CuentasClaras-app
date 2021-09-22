@@ -1,20 +1,30 @@
 import { React, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Table } from "react-bootstrap";
+import { setOperations } from "../../actions";
+
 
 export default function OperationCards() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setOperations());
+  },[]);
+
   const operations = useSelector((state) => {
     return state.operations;
   });
 
-  useEffect(() => {
-    console.table(operations);
-  }, [operations]);
-
 
   return (
     <div>
-      <Table striped bordered hover variant="dark" className="operation-table-home">
+      <Table
+        striped
+        bordered
+        hover
+        variant="dark"
+        className="operation-table-home"
+      >
         <thead>
           <tr>
             <th>Tipo</th>
@@ -25,7 +35,7 @@ export default function OperationCards() {
         </thead>
         <tbody>
           {operations.length &&
-            operations.slice(0,9).map((operation) => {
+            operations.slice(0, 9).map((operation) => {
               if (operation.type === "Egreso") {
                 return (
                   <tr key={operation.id}>

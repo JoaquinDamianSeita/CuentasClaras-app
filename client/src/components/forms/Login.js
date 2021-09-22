@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import Register from "./Register";
 
 import { getToken, setToken } from "../../auth/auth-helper";
 
@@ -14,6 +15,16 @@ export default function Login(props) {
 
   const [user, setUserFields] = useState(initialState);
   const [open, setOpen] = useState(props.isOpen);
+
+  const [showRegister, setShowRegister] = useState(false);
+
+  function handleCloseSignup() {
+    setShowRegister(false);
+  }
+
+  function handleOpenSignup() {
+    setShowRegister(true);
+  }
 
   useEffect(() => {
     setOpen(props.isOpen);
@@ -45,6 +56,13 @@ export default function Login(props) {
 
   return (
     <div>
+      <div>
+        <Register
+          isOpen={showRegister}
+          handleCloseSignup={handleCloseSignup}
+        ></Register>
+      </div>
+
       <Modal
         show={open}
         size={"sm"}
@@ -84,9 +102,17 @@ export default function Login(props) {
               />
             </div>
 
-            <small>Nuevo en Cuentas Claras? Registrarse!</small>
+            <small >
+              Nuevo en Cuentas Claras?{"  "}
+              <a
+                style={{ textDecoration: "underline", cursor:"pointer" }}
+                onClick={() => handleOpenSignup()}
+              >
+                Registrarse!
+              </a>
+            </small>
 
-            <div className="btn-group d-flex justify-content-center">
+            <div className="btn-group d-flex justify-content-center mt-3 ">
               <input type="submit" value="Enviar" className="btn btn-primary" />
             </div>
           </form>

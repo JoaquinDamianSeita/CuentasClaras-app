@@ -16,7 +16,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
-store.dispatch(setOperations(1));
+// store.dispatch(setOperations());
 
 ReactDOM.render(
   <Router>

@@ -13,9 +13,8 @@ export const SET_OPERATION = "SET_OPERATION";
 export const REMOVE_OPERATION = "REMOVE_OPERATION";
 export const REPLACE_OPERATION = "REPLACE_OPERATION";
 
-
 //operations
-export function setOperations(userId) {
+export function setOperations() {
   const userToken = getToken();
   return function (dispatch) {
     return get(`/api/operations/allOperations/`, {
@@ -24,6 +23,9 @@ export function setOperations(userId) {
       },
     })
       .then(function (response) {
+        if (response.data.error) {
+          return { error: response.data.error };
+        }
         dispatch({ type: SET_OPERATIONS, operations: response.data });
       })
       .catch(function (err) {

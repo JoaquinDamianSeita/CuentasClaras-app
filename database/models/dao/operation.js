@@ -89,30 +89,28 @@ class operationDAO {
       throw new Error(`Ocurrio un error en el DAO oneOperation ${error}`);
     }
   }
-  async updateOperation({ amount, concept, id }) {
+  async updateOperation({ amount, concept, id, userId }) {
     try {
-
-      console.log(amount, concept, id + "esto llega al dao update");
       await operationModel.update(
         { amount, concept },
         {
-          where: { id: id },
+          where: { id: id, userId: userId },
         }
       );
-      return "Modificado con exito!";
+      return { msg: "Modificado con exito!" };
     } catch (error) {
       throw new Error(`Ocurrio un error en el DAO updateOperation ${error}`);
     }
   }
-  async deleteOperation(selectedOperationId) {
+  async deleteOperation({ operationId, userId }) {
     try {
       let deleted = await operationModel.destroy({
-        where: { id: selectedOperationId },
+        where: { id: operationId, userId: userId },
       });
       if (deleted === 0) {
         throw new Error(`Fallo al eliminar la operacion`);
       } else {
-        return "Se elimino el elemento con exito!";
+        return { msg: "Se elimino el elemento con exito!" };
       }
     } catch (error) {
       throw new Error(`Ocurrio un error en el DAO deleteOperation ${error}`);

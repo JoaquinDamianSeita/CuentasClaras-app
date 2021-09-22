@@ -53,10 +53,11 @@ class OperationController {
   }
   async controllerOperationRO(req, res, next) {
     try {
-      if (!req.params.operationId || !req.params.userId) {
-        throw new Error("Debes proporcionar un userId y un operationId");
+      if (!req.params.operationId) {
+        throw new Error("Debes proporcionar un operationId");
       }
-      const { userId, operationId } = req.params;
+      const { operationId } = req.params;
+      const userId = req.usuarioId;
 
       let operation = await operationService.oneOperation(userId, operationId);
       res.status(200).json(operation);
@@ -81,7 +82,14 @@ class OperationController {
       if (!req.body.data.id) {
         throw new Error("Debes proporcionar un id de la operación");
       }
-      let operation = await operationService.updateOperation(req.body.data);
+
+      const sendOperation = {
+        id: req.body.data.id,
+        amount: req.body.data.amount,
+        concept: req.body.data.concept,
+        userId: req.usuarioId,
+      };
+      let operation = await operationService.updateOperation(sendOperation);
 
       res.status(200).json(operation);
     } catch (error) {
@@ -94,9 +102,12 @@ class OperationController {
         throw new Error("Debes proporcionar un id de la operación");
       }
 
-      let operation = await operationService.deleteOperation(
-        req.params.operationId
-      );
+      const userId = req.usuarioId;
+
+      let operation = await operationService.deleteOperation({
+        operationId: req.params.operationId,
+        userId,
+      });
 
       res.status(200).json(operation);
     } catch (error) {

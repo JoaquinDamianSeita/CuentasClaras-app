@@ -46,6 +46,8 @@ export default function Register(props) {
 
   return (
     <div>
+
+
       <Modal
         show={open}
         size={"sm"}

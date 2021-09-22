@@ -6,11 +6,17 @@ export function setToken(token) {
 
 export function getToken() {
   const userToken = JSON.parse(localStorage.getItem(TOKEN_KEY));
+  if (!userToken) {
+    window.location.replace("http://localhost:3000/login");
+  }
   return userToken.Token;
 }
 
 export function getUserName() {
   const userToken = JSON.parse(localStorage.getItem(TOKEN_KEY));
+  if (!userToken) {
+    window.location.replace("http://localhost:3000/login");
+  }
   return userToken.Username;
 }
 

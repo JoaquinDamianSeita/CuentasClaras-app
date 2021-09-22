@@ -1,18 +1,18 @@
 import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useHistory } from "react-router-dom";
+import { deleteToken } from "../../auth/auth-helper";
 
 const LogoutButton = () => {
-  const { logout } = useAuth0();
+  const history = useHistory();
   return (
     <button
       className="btn btn-danger btn-block"
-      onClick={() =>
-        logout({
-          returnTo: window.location.origin,
-        })
-      }
+      onClick={() => {
+        deleteToken();
+        history.push("/login");
+      }}
     >
-      Log Out
+      Cerrar Sesión
     </button>
   );
 };

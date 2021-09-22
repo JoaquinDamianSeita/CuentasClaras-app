@@ -13,7 +13,7 @@ const {
 
 router
   .get("/allOperations/", checkJWT,controllerOperationRA)
-  .get("/oneOperation/:userId/:operationId", checkJWT, controllerOperationRO)
+  .get("/oneOperation/:operationId", checkJWT, controllerOperationRO)
   .get("/balance", checkJWT, controllerOperationRB)
   .post("/", checkJWT, controllerOperationCR)
   .put("/:operationID", checkJWT, controllerOperationU)
