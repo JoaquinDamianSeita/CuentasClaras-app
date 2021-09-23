@@ -12,7 +12,7 @@ const {
 } = require("../../database/controller/operation");
 
 router
-  .get("/allOperations/", checkJWT,controllerOperationRA)
+  .get("/allOperations", checkJWT,controllerOperationRA)
   .get("/oneOperation/:operationId", checkJWT, controllerOperationRO)
   .get("/balance", checkJWT, controllerOperationRB)
   .post("/", checkJWT, controllerOperationCR)

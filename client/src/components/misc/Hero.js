@@ -32,7 +32,7 @@ const Hero = () => {
       .catch(function (err) {
         console.log("error", err);
       });
-  },[]);
+  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -41,19 +41,24 @@ const Hero = () => {
       <div className="text-center hero">
         <img
           className="mb-3 app-logo"
-          src={process.env.PUBLIC_URL + "/images/blog.svg"}
+          src={process.env.PUBLIC_URL + "/images/money_4.svg"}
           alt="Blog logo"
-          width="120"
+          width="80"
         />
-        <h1 className="mb-4">Bienvenido {userName}!</h1>
+        <h1 className="mb-3 display-3">¡Hola {userName}!</h1>
 
-        <small className="lead mb-2">
-          ¿No sos user.name? Para iniciar sesión con otro usuario click{" "}
-          <a href="#">aquí!</a>
+        <small style={{fontSize:"16px"}} className="lead mb-5 lead text-muted">
+          ¿No sos {userName}? ¡Para iniciar sesión con otro usuario click{" "}
+          <a
+            style={{ cursor: "pointer", textDecoration: "underline" }}
+            onClick={() => history.push("/login")}
+          >
+            aquí!
+          </a>
         </small>
 
-        <h3 className="mb-2">Saldo en la cuenta:</h3>
-        <h1 className="mb-4">${userBalance}</h1>
+        <h3 className="mb-2 mt-5">Saldo en la cuenta:</h3>
+        <h2 className="mb-4">${userBalance}</h2>
 
         <hr />
       </div>

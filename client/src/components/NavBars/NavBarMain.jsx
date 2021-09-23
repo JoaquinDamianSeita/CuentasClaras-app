@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import LogoutButton from "../auth/Logout-button";
+import { getToken } from "../../auth/auth-helper";
+import { useLocation } from "react-router";
 
 export default function NavBarMain() {
+  const [userLog, setUserLog] = useState(false);
+  const location = useLocation()
+
+  useEffect(() => {
+    if(location.pathname == "/"){
+      setUserLog(false)
+    } else {
+      setUserLog(true)
+    }
+  },[]);
+
   return (
     <Navbar
       collapseOnSelect
@@ -12,9 +25,7 @@ export default function NavBarMain() {
       variant="dark"
     >
       <Container>
-        <h3>
-          Cuentas Claras
-        </h3>
+        <h3>Cuentas Claras</h3>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -24,7 +35,7 @@ export default function NavBarMain() {
                 exact
                 className="nav-link"
                 activeClassName="active"
-                to="/"
+                to="/Home"
               >
                 Home
               </NavLink>
@@ -39,9 +50,9 @@ export default function NavBarMain() {
                 ABM operaciones
               </NavLink>
             </li>
-            <li className="nav-item px-1">
+            {userLog ? <li className="nav-item px-1">
               <LogoutButton />
-            </li>
+            </li> : null}
           </ul>
         </Navbar.Collapse>
       </Container>

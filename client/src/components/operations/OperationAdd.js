@@ -117,6 +117,7 @@ export default function OperationAdd(props) {
             deleteToken();
             history.push("/login");
           } else {
+            console.log(response.data);
             dispatch(addOperation(response.data));
             props.handleCloseAdd();
           }
@@ -183,7 +184,7 @@ export default function OperationAdd(props) {
               </select>
             </div>
             <div className="form-group">
-              <label className="form-label">Categoria:</label>
+              <label className="form-label">Categoría:</label>
               <div className="mb-3">
                 {operation.type === "null" ? <SelectorDisabled /> : null}
                 {operation.type === "Ingreso" ? <CategoriasIngresos /> : null}

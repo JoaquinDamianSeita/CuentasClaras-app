@@ -17,12 +17,13 @@ export const REPLACE_OPERATION = "REPLACE_OPERATION";
 export function setOperations() {
   const userToken = getToken();
   return function (dispatch) {
-    return get(`/api/operations/allOperations/`, {
+    return get(`/api/operations/allOperations`, {
       headers: {
         Authorization: userToken,
       },
     })
       .then(function (response) {
+        console.log(response.data);
         if (response.data.error) {
           return { error: response.data.error };
         }

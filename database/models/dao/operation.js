@@ -21,22 +21,40 @@ class operationDAO {
       throw new Error(`Ocurrio un error en el DAO Create ${error}`);
     }
   }
-  async allOperations(selectedUserId) {
+  async allOperations(selectedUserId, categoryId) {
     try {
-      const operations = await operationModel.findAll({
-        where: { userId: selectedUserId },
-        attributes: ["amount", "concept", "type", "id"],
-        include: {
-          model: Category,
-          as: "category",
-          attributes: ["type"],
-        },
-      });
+      let operations = [];
 
-      if (operations.length === 0) {
-        throw new Error(`Fallo al leer la base de datos`);
+      if (categoryId) {
+        operations = await operationModel.findAll({
+          where: { userId: selectedUserId, categoryId: categoryId },
+          attributes: ["amount", "concept", "type", "id"],
+          include: {
+            model: Category,
+            as: "category",
+            attributes: ["type"],
+          },
+        });
+        if (operations.length === 0) {
+          return [];
+        }
+        return operations;
+      } else {
+        operations = await operationModel.findAll({
+          where: { userId: selectedUserId },
+          attributes: ["amount", "concept", "type", "id"],
+          include: {
+            model: Category,
+            as: "category",
+            attributes: ["type"],
+          },
+        });
+
+        if (operations.length === 0) {
+          return [];
+        }
+        return operations;
       }
-      return operations;
     } catch (error) {
       throw new Error(`Ocurrio un error en el DAO ReadAll ${error}`);
     }
@@ -47,12 +65,11 @@ class operationDAO {
         where: { userId: selectedUserId },
         attributes: ["amount", "type"],
       });
+      let balance = 0;
 
       if (operations.length === 0) {
-        throw new Error(`Fallo al leer la base de datos`);
+        return balance;
       }
-
-      let balance = 0;
 
       operations.forEach((operation) => {
         if (operation.type === "Egreso") {

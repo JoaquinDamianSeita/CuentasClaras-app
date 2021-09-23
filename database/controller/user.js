@@ -1,6 +1,7 @@
-const userService = require("../services/user");
 const bcrypt = require("bcryptjs");
 const jwtTools = require("../../utils/jwtTools");
+
+const UserDAO = require("../models/dao/user");
 
 class UserController {
   constructor() {}
@@ -22,7 +23,7 @@ class UserController {
         password: password,
       };
 
-      await userService.createUser(userCreated);
+      await UserDAO.createUser(userCreated);
       res.status(200).json(`User registered!`);
     } catch (error) {
       res.status(404).json({ error: error.message });
@@ -30,7 +31,7 @@ class UserController {
   }
   async userLogin(req, res, next) {
     try {
-      const user = await userService.findUser(req.body.email);
+      const user = await UserDAO.findUser(req.body.email);
 
       if (user) {
         const iguales = await bcrypt.compare(req.body.password, user.password);

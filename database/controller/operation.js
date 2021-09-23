@@ -1,4 +1,4 @@
-const operationService = require("../services/operation");
+const OperationDAO = require("../models/dao/operation");
 
 class OperationController {
   constructor() {}
@@ -23,13 +23,11 @@ class OperationController {
         categoryId: req.body.data.categoryId,
       };
 
-      let createdOperation = await operationService.createOperation(
-        sendOperation
-      );
+      let createdOperation = await OperationDAO.createOperation(sendOperation);
 
       console.log(createdOperation);
 
-      let responseOperation = await operationService.oneOperation(
+      let responseOperation = await OperationDAO.oneOperation(
         createdOperation.userId,
         createdOperation.id
       );
@@ -44,8 +42,13 @@ class OperationController {
       if (!req.usuarioId) {
         throw new Error("Debes proporcionar un userId");
       }
+      let categoryId = null;
 
-      let operations = await operationService.allOperations(req.usuarioId);
+      if(req.query.categoryId){
+        categoryId = req.query.categoryId;
+      }
+
+      let operations = await OperationDAO.allOperations(req.usuarioId, categoryId);
       res.status(200).json(operations);
     } catch (error) {
       res.status(404).json({ error: error.message });
@@ -59,7 +62,7 @@ class OperationController {
       const { operationId } = req.params;
       const userId = req.usuarioId;
 
-      let operation = await operationService.oneOperation(userId, operationId);
+      let operation = await OperationDAO.oneOperation(userId, operationId);
       res.status(200).json(operation);
     } catch (error) {
       res.status(404).json({ error: error.message });
@@ -71,7 +74,7 @@ class OperationController {
         throw new Error("Debes proporcionar un userId");
       }
 
-      let balance = await operationService.balanceOperations(req.usuarioId);
+      let balance = await OperationDAO.balanceOperations(req.usuarioId);
       res.status(200).json(balance);
     } catch (error) {
       res.status(404).json({ error: error.message });
@@ -89,7 +92,7 @@ class OperationController {
         concept: req.body.data.concept,
         userId: req.usuarioId,
       };
-      let operation = await operationService.updateOperation(sendOperation);
+      let operation = await OperationDAO.updateOperation(sendOperation);
 
       res.status(200).json(operation);
     } catch (error) {
@@ -104,7 +107,7 @@ class OperationController {
 
       const userId = req.usuarioId;
 
-      let operation = await operationService.deleteOperation({
+      let operation = await OperationDAO.deleteOperation({
         operationId: req.params.operationId,
         userId,
       });

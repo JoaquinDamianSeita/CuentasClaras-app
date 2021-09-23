@@ -8,7 +8,7 @@ const LoginButton = () => {
     setShowLogin(false);
   }
 
-  function handleShowLogin(id) {
+  function handleShowLogin() {
     setShowLogin(true);
   }
 

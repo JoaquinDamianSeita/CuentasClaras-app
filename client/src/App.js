@@ -6,6 +6,7 @@ import NavBarMain from "./components/NavBars/NavBarMain";
 
 import Home from "../src/components/views/Home";
 import LoginPage from "./components/misc/LoginPage";
+import HomeInit from "./components/views/Home-Init";
 
 
 import ABM from "./components/views/ABM";
@@ -33,9 +34,10 @@ export default function App() {
 function Main() {
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/Home" component={Home} />
       <Route exact path="/ABM" component={ABM} />
       <Route exact path="/login" component={LoginPage} />
+      <Route exact path="/" component={HomeInit} />
 
       {/* <ProtectedRoute exact path="/posts" component={PostsList} />
       <ProtectedRoute exact path="/profile" component={Profile} />

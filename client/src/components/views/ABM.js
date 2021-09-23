@@ -3,7 +3,6 @@ import OperationListTable from "../operations/OperationListTable";
 import OperationAdd from "../operations/OperationAdd";
 
 export default function ABM() {
-  const userId = 1;
 
   const [openAdd, setOpenAdd] = useState(false);
 

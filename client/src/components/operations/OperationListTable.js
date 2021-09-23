@@ -7,7 +7,6 @@ import OperationEdit from "./OperationEdit";
 import { getToken, deleteToken } from "../../auth/auth-helper";
 import { useHistory } from "react-router-dom";
 
-// import PostInfoModal from "./PostInfoModal";
 
 export default function OperationListTable() {
   const [showEdit, setShowEdit] = useState(false);
@@ -77,6 +76,14 @@ export default function OperationListTable() {
       });
   }
 
+  async function handleSubmitFiltros() {
+    console.log("post filtros");
+  }
+
+  function handleChangeFiltros() {
+    console.log("change filtos");
+  }
+
   return (
     <div>
       <div>
@@ -86,6 +93,27 @@ export default function OperationListTable() {
           handleCloseEdit={handleCloseEdit}
         ></OperationEdit>
       </div>
+
+      <form onSubmit={handleSubmitFiltros} className="background-black">
+            <div className="form-group">
+              <label className="form-label">Tipo:</label>
+              <select
+                class="form-select"
+                onChange={handleChangeFiltros}
+                name="type"
+                // value={}
+              >
+                <option selected value={"null"}>
+                  Seleccionar el tipo de operación
+                </option>
+                <option value="Ingreso">Ingreso</option>
+                <option value="Egreso">Egreso</option>
+              </select>
+            </div>
+            <div className="btn-group d-flex justify-content-center">
+              <input type="submit" value="Submit" className="btn btn-primary" />
+            </div>
+          </form>
 
       <Table striped bordered hover variant="dark" className="operation-table">
         <thead>

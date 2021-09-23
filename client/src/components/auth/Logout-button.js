@@ -9,7 +9,8 @@ const LogoutButton = () => {
       className="btn btn-danger btn-block"
       onClick={() => {
         deleteToken();
-        history.push("/login");
+        history.push("/");
+        window.location.reload();
       }}
     >
       Cerrar Sesión

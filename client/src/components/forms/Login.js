@@ -46,6 +46,8 @@ export default function Login(props) {
         .then((response) => {
           setToken(response.data);
           props.handleCloseLogin();
+          history.push("/Home");
+          window.location.reload();
         })
         .catch((err) => {
           console.log(err);
