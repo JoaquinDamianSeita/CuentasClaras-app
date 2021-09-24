@@ -1,12 +1,7 @@
 *FRONTEND
 
-*El ABM debe tener filtros de las operaciones(prioridad categoria).
 *Realizar las validaciones en el front de los formularios y peticiones.(Exigir textos y numeros donde corresponda)
 *Hacer el diseño responsive para celular y tablet tambien.
-
-*BACKEND 
-
-*Agregar los filtros a la ruta de las operaciones que llegaran por query(prioridad categoria).
 
 
 

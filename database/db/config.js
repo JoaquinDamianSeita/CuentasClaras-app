@@ -7,5 +7,4 @@ module.exports = {
         database: "alkemy_test",
         host: "localhost"
     }
-
 }

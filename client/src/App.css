@@ -12,11 +12,16 @@
 .operation-table-home {
   width: 60%;
   margin: auto;
-  text-align: center;
 }
 
 .hero {
   color: #dadada;
+}
+
+.filtrosABM {
+  width: 60%;
+  margin: auto;
+  text-align: center;
 }
 
 .td-egreso {
@@ -26,7 +31,6 @@
 .td-ingreso {
   background-color: #58b324;
 }
-
 
 .close ::before {
   content: "X";
@@ -50,7 +54,6 @@
   background-color: rgb(247, 12, 12, 0.5);
 }
 
-
 .profile-box img {
   display: block;
   margin: auto auto;
@@ -65,7 +68,7 @@
   margin: auto auto;
 }
 
-.body-modal-info{
+.body-modal-info {
   text-align: justify;
 }
 

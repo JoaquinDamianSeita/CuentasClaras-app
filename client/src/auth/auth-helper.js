@@ -7,7 +7,7 @@ export function setToken(token) {
 export function getToken(clave) {
   const userToken = JSON.parse(localStorage.getItem(TOKEN_KEY));
   if (!userToken && !clave) {
-    window.location.replace("http://localhost:3000/login");
+    return null
   }
   if (!userToken && clave) {
     return null
@@ -18,7 +18,7 @@ export function getToken(clave) {
 export function getUserName() {
   const userToken = JSON.parse(localStorage.getItem(TOKEN_KEY));
   if (!userToken) {
-    window.location.replace("http://localhost:3000/login");
+    return null
   }
   return userToken.Username;
 }

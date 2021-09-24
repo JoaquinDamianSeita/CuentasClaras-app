@@ -11,6 +11,9 @@ const Hero = () => {
 
   const userName = getUserName();
   const userToken = getToken();
+  if (!userToken || !userName) {
+    history.push("/");
+  }
 
   useEffect(() => {
     setIsLoading(true);

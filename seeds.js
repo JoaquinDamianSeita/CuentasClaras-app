@@ -44,14 +44,16 @@ sequelize
       console.log("Nos hemos conectado a la base de datos");
     })
     .catch((error) => {
-      console.log("Se ha producido un error", error);
-    })
-    .then(() => {
-        Users.forEach( user => User.create(user));
+      console.log("Se ha producido un error", error)
     })
     .then(() => {
         Categories.forEach( category => Category.create(category));
     })
-    .then(() => {
-        Operations.forEach( operation => Operation.create(operation));
-    })
+    // })
+    // .then(() => {
+    //     Users.forEach( user => User.create(user));
+    // })
+    
+    // .then(() => {
+    //     Operations.forEach( operation => Operation.create(operation));
+    // })
