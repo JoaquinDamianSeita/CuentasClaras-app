@@ -12,7 +12,7 @@ export default function OperationAdd(props) {
   let initialState = {
     amount: 0,
     concept: "",
-    type: "null",
+    type: 0,
     categoryId: 0,
   };
 
@@ -31,6 +31,7 @@ export default function OperationAdd(props) {
   function CategoriasIngresos() {
     return (
       <select
+        required
         class="form-select"
         onChange={handleChange}
         name="categoryId"
@@ -51,6 +52,7 @@ export default function OperationAdd(props) {
   function CategoriasEgresos() {
     return (
       <select
+        required
         class="form-select"
         onChange={handleChange}
         name="categoryId"
@@ -63,8 +65,8 @@ export default function OperationAdd(props) {
         <option value={2}>Transporte</option>
         <option value={3}>Educación</option>
         <option value={4}>Entretenimiento</option>
-        <option value={5}>Facturas</option>
-        <option value={6}>Nafta</option>
+        <option value={5}>Nafta</option>
+        <option value={6}>Facturas</option>
         <option value={7}>Hogar</option>
         <option value={8}>Ropa</option>
         <option value={9}>Salud</option>
@@ -88,6 +90,14 @@ export default function OperationAdd(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (
+      !operation.amount ||
+      !operation.concept ||
+      operation.type === 0 ||
+      !operation.categoryId === null
+    ) {
+      alert("Debes completar todos los campos para continuar.");
+    }
     if (
       operation.amount &&
       operation.concept &&
@@ -120,6 +130,7 @@ export default function OperationAdd(props) {
             console.log(response.data);
             dispatch(addOperation(response.data));
             props.handleCloseAdd();
+            setFields(initialState);
           }
         })
         .catch((err) => {
@@ -171,12 +182,14 @@ export default function OperationAdd(props) {
             <div className="form-group">
               <label className="form-label">Tipo:</label>
               <select
+                required
                 class="form-select"
                 onChange={handleChange}
                 name="type"
                 value={operation.type}
+                defaultValue={0}
               >
-                <option selected value={"null"}>
+                <option selected value={0}>
                   Seleccionar el tipo de operación
                 </option>
                 <option value="Ingreso">Ingreso</option>
@@ -186,14 +199,18 @@ export default function OperationAdd(props) {
             <div className="form-group">
               <label className="form-label">Categoría:</label>
               <div className="mb-3">
-                {operation.type === "null" ? <SelectorDisabled /> : null}
+                {operation.type == 0 ? <SelectorDisabled /> : null}
                 {operation.type === "Ingreso" ? <CategoriasIngresos /> : null}
                 {operation.type === "Egreso" ? <CategoriasEgresos /> : null}
               </div>
             </div>
 
             <div className="btn-group d-flex justify-content-center">
-              <input type="submit" value="Submit" className="btn btn-primary" />
+              <input
+                type="submit"
+                value="Confirmar"
+                className="btn btn-primary"
+              />
             </div>
           </form>
         </Modal.Body>

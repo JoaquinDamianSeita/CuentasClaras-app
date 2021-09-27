@@ -1,3 +1,6 @@
+
+//Este archivo se encargar del manejo de los JWT de los usuarios
+
 const TOKEN_KEY = "CUENTASCLARAS_USER";
 
 export function setToken(token) {

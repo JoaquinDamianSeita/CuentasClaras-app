@@ -1,8 +1,39 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { getToken } from "../../auth/auth-helper";
 
 export default function HomeInit() {
+  const userToken = getToken();
   const history = useHistory();
+
+  function IniciarSesion() {
+    return (
+      <button
+        className="btn btn-primary btn-block"
+        onClick={() => {
+          history.push("/login");
+          window.location.reload();
+        }}
+      >
+        Iniciar Sesión
+      </button>
+    );
+  }
+
+  function IrHome() {
+    return (
+      <button
+        className="btn btn-success btn-block"
+        onClick={() => {
+          history.push("/Home");
+          window.location.reload();
+        }}
+      >
+        Ir a operaciones
+      </button>
+    );
+  }
+
   return (
     <div className="text-center hero">
       <img
@@ -15,12 +46,8 @@ export default function HomeInit() {
 
       <h4 className="mb-3">Para comenzar debes iniciar sesión</h4>
 
-      <button
-        className="btn btn-primary btn-block"
-        onClick={() => history.push("/login")}
-      >
-        Iniciar Sesión
-      </button>
+      {userToken ? <IrHome /> : <IniciarSesion />}
+
       <hr />
     </div>
   );

@@ -50,7 +50,10 @@ const Hero = () => {
         />
         <h1 className="mb-3 display-3">¡Hola {userName}!</h1>
 
-        <small style={{fontSize:"16px"}} className="lead mb-5 lead text-muted">
+        <small
+          style={{ fontSize: "16px" }}
+          className="lead mb-4 lead text-muted d-block"
+        >
           ¿No sos {userName}? ¡Para iniciar sesión con otro usuario click{" "}
           <a
             style={{ cursor: "pointer", textDecoration: "underline" }}
@@ -60,7 +63,14 @@ const Hero = () => {
           </a>
         </small>
 
-        <h3 className="mb-2 mt-5">Saldo en la cuenta:</h3>
+        <button
+          className="btn btn-success"
+          onClick={() => history.push("/ABM")}
+        >
+          Administrar Operaciones
+        </button>
+
+        <h3 className="mb-2 mt-4">Saldo en la cuenta:</h3>
         <h2 className="mb-4">${userBalance}</h2>
 
         <hr />

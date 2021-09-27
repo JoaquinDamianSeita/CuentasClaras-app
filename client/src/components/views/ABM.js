@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import OperationListTable from "../operations/OperationListTable";
 import OperationAdd from "../operations/OperationAdd";
+import { useHistory } from "react-router-dom";
 
 export default function ABM() {
+  const history = useHistory();
 
   const [openAdd, setOpenAdd] = useState(false);
 
@@ -15,10 +17,17 @@ export default function ABM() {
   }
 
   return (
-    <div className="text-center">
+    <div className="text-center mt-5">
+      <button
+        className="btn btn-secondary d-block mx-auto mt-2 mb-5"
+        onClick={() => history.push("/Home")}
+      >
+        Volver al Home
+      </button>
       <button className="btn btn-primary btn-lg mb-5" onClick={handleOpenAdd}>
         Agregar Operación
       </button>
+
       <div>
         <OperationAdd
           isOpen={openAdd}

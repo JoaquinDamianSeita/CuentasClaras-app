@@ -5,13 +5,16 @@
 }
 
 .operation-table {
-  width: 80%;
+  width: 60%;
   margin: auto;
   text-align: center;
 }
+
+
 .operation-table-home {
   width: 60%;
   margin: auto;
+  text-align: center;
 }
 
 .hero {
@@ -35,7 +38,7 @@
 .close ::before {
   content: "X";
   visibility: visible;
-  color: "black";
+  color: "white";
   font-weight: bold;
 }
 

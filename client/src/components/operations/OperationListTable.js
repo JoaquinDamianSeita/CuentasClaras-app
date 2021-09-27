@@ -12,9 +12,19 @@ export default function OperationListTable() {
   const [tempOperationId, setTempOperationId] = useState("");
   const [categoryFilter, setCategoryFilter] = useState(false);
   const [categoryFilterTemp, setCategoryFilterTemp] = useState(null);
+  const [mobile, setMobile] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  function isMobile() {
+    if (window.screen.width < 550) {
+      setMobile(true);
+    }
+    if (window.screen.width > 550) {
+      setMobile(false);
+    }
+  }
 
   const userToken = getToken();
   if (!userToken) {
@@ -45,7 +55,9 @@ export default function OperationListTable() {
   }, []);
 
   useEffect(() => {
+    isMobile();
     dispatch(setOperations());
+    console.log(window.screen.width);
   }, []);
 
   function handleCloseEdit() {
@@ -189,7 +201,14 @@ export default function OperationListTable() {
                     <td>{operation.type}</td>
                     <td>{operation.concept}</td>
                     <td>{operation.category.type}</td>
-                    <td style={{ color: "#da222b" }}>-${operation.amount}</td>
+
+                    {operation.amount >= 10000 ? (
+                      <td style={{ color: "#da222b", fontSize: "14px" }}>
+                        ${operation.amount}
+                      </td>
+                    ) : (
+                      <td style={{ color: "#da222b" }}>${operation.amount}</td>
+                    )}
                     <td>
                       <div className="btn-group">
                         <button
@@ -198,12 +217,14 @@ export default function OperationListTable() {
                         >
                           Editar
                         </button>
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => handleDelete(String(operation.id))}
-                        >
-                          Borrar
-                        </button>
+                        {mobile ? null : (
+                          <button
+                            className="btn btn-danger btn-sm"
+                            onClick={() => handleDelete(String(operation.id))}
+                          >
+                            Borrar
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -214,7 +235,13 @@ export default function OperationListTable() {
                     <td>{operation.type}</td>
                     <td>{operation.concept}</td>
                     <td>{operation.category.type}</td>
-                    <td style={{ color: "#58b324" }}>${operation.amount}</td>
+                    {operation.amount >= 10000 ? (
+                      <td style={{ color: "#58b324", fontSize: "14px" }}>
+                        ${operation.amount}
+                      </td>
+                    ) : (
+                      <td style={{ color: "#58b324" }}>${operation.amount}</td>
+                    )}
                     <td>
                       <div className="btn-group">
                         <button
@@ -223,12 +250,14 @@ export default function OperationListTable() {
                         >
                           Editar
                         </button>
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => handleDelete(String(operation.id))}
-                        >
-                          Borrar
-                        </button>
+                        {mobile ? null : (
+                          <button
+                            className="btn btn-danger btn-sm"
+                            onClick={() => handleDelete(String(operation.id))}
+                          >
+                            Borrar
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -247,7 +276,13 @@ export default function OperationListTable() {
                     <td>{operation.type}</td>
                     <td>{operation.concept}</td>
                     <td>{operation.category.type}</td>
-                    <td style={{ color: "#da222b" }}>-${operation.amount}</td>
+                    {operation.amount >= 10000 ? (
+                      <td style={{ color: "#da222b", fontSize: "14px" }}>
+                        ${operation.amount}
+                      </td>
+                    ) : (
+                      <td style={{ color: "#da222b" }}>${operation.amount}</td>
+                    )}
                     <td>
                       <div className="btn-group">
                         <button
@@ -256,12 +291,14 @@ export default function OperationListTable() {
                         >
                           Editar
                         </button>
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => handleDelete(String(operation.id))}
-                        >
-                          Borrar
-                        </button>
+                        {mobile ? null : (
+                          <button
+                            className="btn btn-danger btn-sm"
+                            onClick={() => handleDelete(String(operation.id))}
+                          >
+                            Borrar
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -276,7 +313,13 @@ export default function OperationListTable() {
                     <td>{operation.type}</td>
                     <td>{operation.concept}</td>
                     <td>{operation.category.type}</td>
-                    <td style={{ color: "#58b324" }}>${operation.amount}</td>
+                    {operation.amount >= 10000 ? (
+                      <td style={{ color: "#58b324", fontSize: "14px" }}>
+                        ${operation.amount}
+                      </td>
+                    ) : (
+                      <td style={{ color: "#58b324" }}>${operation.amount}</td>
+                    )}
                     <td>
                       <div className="btn-group">
                         <button
@@ -285,12 +328,14 @@ export default function OperationListTable() {
                         >
                           Editar
                         </button>
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => handleDelete(String(operation.id))}
-                        >
-                          Borrar
-                        </button>
+                        {mobile ? null : (
+                          <button
+                            className="btn btn-danger btn-sm"
+                            onClick={() => handleDelete(String(operation.id))}
+                          >
+                            Borrar
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>

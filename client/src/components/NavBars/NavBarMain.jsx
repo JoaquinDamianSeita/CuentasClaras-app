@@ -7,15 +7,15 @@ import { useLocation } from "react-router";
 
 export default function NavBarMain() {
   const [userLog, setUserLog] = useState(false);
-  const location = useLocation()
+  const location = useLocation();
 
   useEffect(() => {
-    if(location.pathname == "/"){
-      setUserLog(false)
+    if (location.pathname == "/") {
+      setUserLog(false);
     } else {
-      setUserLog(true)
+      setUserLog(true);
     }
-  },[]);
+  }, []);
 
   return (
     <Navbar
@@ -26,9 +26,10 @@ export default function NavBarMain() {
     >
       <Container>
         <h3>Cuentas Claras</h3>
+
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-        <Navbar.Collapse id="responsive-navbar-nav">
+        <Navbar.Collapse id="responsive-navbar-nav mr-3">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item px-1">
               <NavLink
@@ -50,11 +51,13 @@ export default function NavBarMain() {
                 ABM operaciones
               </NavLink>
             </li>
-            {userLog ? <li className="nav-item px-1">
-              <LogoutButton />
-            </li> : null}
           </ul>
         </Navbar.Collapse>
+        {userLog ? (
+          <div className="nav-item px-1">
+            <LogoutButton />
+          </div>
+        ) : null}
       </Container>
     </Navbar>
   );

@@ -1,8 +1,6 @@
 *FRONTEND
 
 *Realizar las validaciones en el front de los formularios y peticiones.(Exigir textos y numeros donde corresponda)
-*Hacer el diseño responsive para celular y tablet tambien.
-
-
-
-
+*Revisar formularios validaciones antes del submit.
+*BUGS: Se pueden enviar operaciones sin el tipo.
+*Comentar y revisar el contenido de todos los archivos del proyecto.
