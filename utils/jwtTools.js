@@ -3,10 +3,10 @@ const jwt = require("jwt-simple");
 const {SECRET_JWT} = require("../config/globals");
 
 class jwtTools {
-  async createToken(user) {
+  async createToken(userId) {
     try {
       const payload = {
-        usuarioId: user.id,
+        usuarioId: userId,
         createdAt: moment().unix(),
         expiredAt: moment().add(24, "hours").unix(),
       };

@@ -1,3 +1,6 @@
+
+// ACA COMPRUEBO QUE EL TOKEN SEA VALIDO Y NO ESTE VENCIDO
+
 const jwt = require("jwt-simple");
 const moment = require("moment");
 
@@ -22,8 +25,8 @@ const checkToken = (req, res, next) => {
     return res.json({ error: "El token ha expirado" });
   }
 
+  // SI TODO SALE BIEN LO ENVIO AL CONTROLADOR
   req.usuarioId = payload.usuarioId;
-
   next();
 };
 

@@ -2,6 +2,8 @@ const operationModel = require("../schemas/Operation");
 const Category = require("../schemas/Category");
 
 class operationDAO {
+
+  //Creo una operacion segun el modelo de operaciones
   async createOperation({ amount, concept, type, userId, categoryId }) {
     try {
       const operation = await operationModel.create({
@@ -21,40 +23,25 @@ class operationDAO {
       throw new Error(`Ocurrio un error en el DAO Create ${error}`);
     }
   }
-  async allOperations(selectedUserId, categoryId) {
+  async allOperations(selectedUserId) {
     try {
       let operations = [];
 
-      if (categoryId) {
-        operations = await operationModel.findAll({
-          where: { userId: selectedUserId, categoryId: categoryId },
-          attributes: ["amount", "concept", "type", "id"],
-          include: {
-            model: Category,
-            as: "category",
-            attributes: ["type"],
-          },
-        });
-        if (operations.length === 0) {
-          return [];
-        }
-        return operations;
-      } else {
-        operations = await operationModel.findAll({
-          where: { userId: selectedUserId },
-          attributes: ["amount", "concept", "type", "id"],
-          include: {
-            model: Category,
-            as: "category",
-            attributes: ["type"],
-          },
-        });
+      // Busco todas las operaciones con el id del usuario deseado
+      operations = await operationModel.findAll({
+        where: { userId: selectedUserId },
+        attributes: ["amount", "concept", "type", "id"],
+        include: {
+          model: Category,
+          as: "category",
+          attributes: ["type"],
+        },
+      });
 
-        if (operations.length === 0) {
-          return [];
-        }
-        return operations;
+      if (operations.length === 0) {
+        return [];
       }
+      return operations;
     } catch (error) {
       throw new Error(`Ocurrio un error en el DAO ReadAll ${error}`);
     }
@@ -71,6 +58,7 @@ class operationDAO {
         return balance;
       }
 
+      // Segun el tipo de operacion se resta o se suma a la variable balance
       operations.forEach((operation) => {
         if (operation.type === "Egreso") {
           balance = balance - parseInt(operation.amount);
@@ -86,6 +74,8 @@ class operationDAO {
     }
   }
   async oneOperation(selectedUserId, selectedOperationId) {
+
+    //Recupero una sola operacion donde el id del usuario y el de la operacion coincidan
     try {
       const operation = await operationModel.findOne({
         where: { userId: selectedUserId, id: selectedOperationId },
@@ -107,6 +97,8 @@ class operationDAO {
     }
   }
   async updateOperation({ amount, concept, id, userId }) {
+
+    //actualizo una operacion donde el id del usuario y la operacion coincidan
     try {
       await operationModel.update(
         { amount, concept },
@@ -120,6 +112,8 @@ class operationDAO {
     }
   }
   async deleteOperation({ operationId, userId }) {
+
+    //Borro una operacion donde el id del usuario y la operacion coincidan
     try {
       let deleted = await operationModel.destroy({
         where: { id: operationId, userId: userId },

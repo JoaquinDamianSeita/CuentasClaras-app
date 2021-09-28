@@ -1,10 +1,13 @@
-const {DB_PASSWORD} = require("../../config/globals");
+
+// ESTE ARCHIVO CONTIENE LAS CONFIGURACIONES DE LA BASE DE DATOS
+
+const {DB_PASSWORD, DB_USERNAME, DB_NAME, DB_HOST} = require("../../config/globals");
 
 module.exports = {
     database: {
-        username: "root",
+        username: DB_USERNAME,
         password: DB_PASSWORD,
-        database: "alkemy_test",
-        host: "localhost"
+        database: DB_NAME,
+        host: DB_HOST
     }
 }

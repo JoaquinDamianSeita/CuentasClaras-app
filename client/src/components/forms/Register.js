@@ -1,3 +1,6 @@
+
+//FORMULARIO REGISTRO DE USUARIOS
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
@@ -46,8 +49,6 @@ export default function Register(props) {
 
   return (
     <div>
-
-
       <Modal
         show={open}
         size={"sm"}
@@ -96,9 +97,6 @@ export default function Register(props) {
                 placeholder="qwerty"
               />
             </div>
-
-            <p>Ya tienes una cuenta? Iniciar sesión</p>
-
             <div className="btn-group d-flex justify-content-center">
               <input type="submit" value="Enviar" className="btn btn-primary" />
             </div>

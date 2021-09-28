@@ -1,3 +1,6 @@
+
+//BOTON CERRAR SESION
+
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { deleteToken } from "../../auth/auth-helper";

@@ -1,10 +1,12 @@
+
+//FORMULARIO INICIO DE SESION
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Register from "./Register";
-
-import { getToken, setToken } from "../../auth/auth-helper";
+import { setToken } from "../../auth/auth-helper";
 
 export default function Login(props) {
   const history = useHistory();
@@ -12,10 +14,8 @@ export default function Login(props) {
     email: "",
     password: "",
   };
-
   const [user, setUserFields] = useState(initialState);
   const [open, setOpen] = useState(props.isOpen);
-
   const [showRegister, setShowRegister] = useState(false);
 
   function handleCloseSignup() {
@@ -51,7 +51,7 @@ export default function Login(props) {
         })
         .catch((err) => {
           console.log(err);
-          alert(`No se iniciar sesión ${err}`);
+          alert(`No se pudo iniciar sesión ${err}`);
         });
     }
   }
@@ -104,10 +104,10 @@ export default function Login(props) {
               />
             </div>
 
-            <small >
-              Nuevo en Cuentas Claras?{"  "}
+            <small>
+              ¿Nuevo en Cuentas Claras?{"  "}
               <a
-                style={{ textDecoration: "underline", cursor:"pointer" }}
+                style={{ textDecoration: "underline", cursor: "pointer" }}
                 onClick={() => handleOpenSignup()}
               >
                 Registrarse!

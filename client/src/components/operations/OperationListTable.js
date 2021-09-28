@@ -1,3 +1,5 @@
+//ESTE COMPONENTE ES LA TABLA DEL ABM OPERACIONES
+
 import { React, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Col, Row, Table } from "react-bootstrap";
@@ -8,15 +10,25 @@ import { getToken, deleteToken } from "../../auth/auth-helper";
 import { useHistory } from "react-router-dom";
 
 export default function OperationListTable() {
+  // Determina si se muestra el modal de editar operacion o no
   const [showEdit, setShowEdit] = useState(false);
+
+  // Almacena temporalmente el id de la operacion a borrar o editar
   const [tempOperationId, setTempOperationId] = useState("");
+
+  // Determina si los filtros estan activos o no
   const [categoryFilter, setCategoryFilter] = useState(false);
+
+  // Determina la categoria por la cual se van a filtrar las operaciones
   const [categoryFilterTemp, setCategoryFilterTemp] = useState(null);
+
+  // Determina si el usuario esta usando la aplicacion desde el celular
   const [mobile, setMobile] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // Detecto si el usuario esta usando la app desde el celular
   function isMobile() {
     if (window.screen.width < 550) {
       setMobile(true);
@@ -26,6 +38,7 @@ export default function OperationListTable() {
     }
   }
 
+  // si no hay token lo envio al inicio de todo
   const userToken = getToken();
   if (!userToken) {
     history.push("/");
@@ -35,14 +48,17 @@ export default function OperationListTable() {
     return state.operations;
   });
 
-  useEffect(() => {
-    axios
+  //Calculo el balance del usuario
+  useEffect(async () => {
+    await axios
       .get(`/api/operations/balance/`, {
+        // Envio el token el usuario
         headers: {
           Authorization: userToken,
         },
       })
       .then((response) => {
+        //Si hay error con el token lo borro y el usuario inicia sesion otra vez
         if (response.data.error) {
           alert("Ocurrio un error debes iniciar sesion nuevamente");
           deleteToken();
@@ -54,10 +70,11 @@ export default function OperationListTable() {
       });
   }, []);
 
+  /* Detecto si el usuario esta desde el celular 
+  y tambien actualizo el estado de las operaciones en la store */
   useEffect(() => {
     isMobile();
     dispatch(setOperations());
-    console.log(window.screen.width);
   }, []);
 
   function handleCloseEdit() {
@@ -69,22 +86,26 @@ export default function OperationListTable() {
     setShowEdit(true);
   }
 
+  // Se encarga de borrar la operacion seleccionada
   async function handleDelete(operationId) {
-    axios
+    await axios
       .delete(`/api/operations/${operationId}`, {
         headers: {
           Authorization: userToken,
         },
       })
       .then((response) => {
+        //Si hay error con el token lo borro y el usuario inicia sesion otra vez
         if (response.data.error) {
           console.log(response.data.error);
           alert("Ocurrio un error debes iniciar sesion nuevamente");
           deleteToken();
           history.push("/login");
+        } else {
+          alert(response.data.msg);
+          dispatch(removeOperation(operationId));
+          window.location.reload();
         }
-        dispatch(removeOperation(operationId));
-        window.location.reload();
       })
       .catch((error) => {
         console.log("error", error);
@@ -94,6 +115,7 @@ export default function OperationListTable() {
       });
   }
 
+  // Cuando apreto el boton fitrar
   function handleSubmitFiltros(event) {
     event.preventDefault();
     if (categoryFilterTemp) {
@@ -101,6 +123,7 @@ export default function OperationListTable() {
     }
   }
 
+  // Cuando apreto el boton limpiar filtros
   function handleCloseFiltros() {
     setCategoryFilter(false);
     window.location.reload();
@@ -192,6 +215,7 @@ export default function OperationListTable() {
           </tr>
         </thead>
         <tbody>
+        {/* Si no hay filtros activos muestro esta tabla */}
           {operations.length &&
             !categoryFilter &&
             operations.map((operation) => {
@@ -201,7 +225,7 @@ export default function OperationListTable() {
                     <td>{operation.type}</td>
                     <td>{operation.concept}</td>
                     <td>{operation.category.type}</td>
-
+                    {/* Si el numero es mayor a 10000 bajo el tamaño de la fuente */}
                     {operation.amount >= 10000 ? (
                       <td style={{ color: "#da222b", fontSize: "14px" }}>
                         ${operation.amount}
@@ -217,6 +241,7 @@ export default function OperationListTable() {
                         >
                           Editar
                         </button>
+                        {/* Si el dispositivo no es un celular muestro el boton de borrar */}
                         {mobile ? null : (
                           <button
                             className="btn btn-danger btn-sm"
@@ -235,6 +260,7 @@ export default function OperationListTable() {
                     <td>{operation.type}</td>
                     <td>{operation.concept}</td>
                     <td>{operation.category.type}</td>
+                    {/* Si el numero es mayor a 10000 bajo el tamaño de la fuente */}
                     {operation.amount >= 10000 ? (
                       <td style={{ color: "#58b324", fontSize: "14px" }}>
                         ${operation.amount}
@@ -250,6 +276,7 @@ export default function OperationListTable() {
                         >
                           Editar
                         </button>
+                        {/* Si el dispositivo no es un celular muestro el boton de borrar */}
                         {mobile ? null : (
                           <button
                             className="btn btn-danger btn-sm"
@@ -264,6 +291,8 @@ export default function OperationListTable() {
                 );
               }
             })}
+
+          {/* Si hay filtros activos muestro esta tabla */}
           {operations.length &&
             categoryFilter &&
             operations.map((operation) => {
@@ -276,6 +305,7 @@ export default function OperationListTable() {
                     <td>{operation.type}</td>
                     <td>{operation.concept}</td>
                     <td>{operation.category.type}</td>
+                    {/* Si el numero es mayor a 10000 bajo el tamaño de la fuente */}
                     {operation.amount >= 10000 ? (
                       <td style={{ color: "#da222b", fontSize: "14px" }}>
                         ${operation.amount}
@@ -291,6 +321,7 @@ export default function OperationListTable() {
                         >
                           Editar
                         </button>
+                        {/* Si el dispositivo no es un celular muestro el boton de borrar */}
                         {mobile ? null : (
                           <button
                             className="btn btn-danger btn-sm"
@@ -313,6 +344,7 @@ export default function OperationListTable() {
                     <td>{operation.type}</td>
                     <td>{operation.concept}</td>
                     <td>{operation.category.type}</td>
+                    {/* Si el numero es mayor a 10000 bajo el tamaño de la fuente */}
                     {operation.amount >= 10000 ? (
                       <td style={{ color: "#58b324", fontSize: "14px" }}>
                         ${operation.amount}
@@ -328,6 +360,7 @@ export default function OperationListTable() {
                         >
                           Editar
                         </button>
+                        {/* Si el dispositivo no es un celular muestro el boton de borrar */}
                         {mobile ? null : (
                           <button
                             className="btn btn-danger btn-sm"

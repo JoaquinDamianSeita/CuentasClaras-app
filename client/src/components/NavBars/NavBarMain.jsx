@@ -1,8 +1,10 @@
+
+//NAVBAR SUPERIOR
+
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Container } from "react-bootstrap";
 import LogoutButton from "../auth/Logout-button";
-import { getToken } from "../../auth/auth-helper";
 import { useLocation } from "react-router";
 
 export default function NavBarMain() {
@@ -10,12 +12,12 @@ export default function NavBarMain() {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname == "/") {
+    if (location.pathname == "/" || location.pathname == "/login" ) {
       setUserLog(false);
     } else {
       setUserLog(true);
     }
-  }, []);
+  });
 
   return (
     <Navbar
@@ -38,7 +40,7 @@ export default function NavBarMain() {
                 activeClassName="active"
                 to="/Home"
               >
-                Home
+                Inicio
               </NavLink>
             </li>
             <li className="nav-item px-1">

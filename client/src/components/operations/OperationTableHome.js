@@ -1,4 +1,7 @@
-import { React, useState, useEffect } from "react";
+
+//ESTA ES UNA TABLA MAS SENCILLA PARA EL INICIO QUE MUESTRA LAS ULTIMAS 10 OPERACIONES
+
+import { React, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Table } from "react-bootstrap";
 import { setOperations } from "../../actions";
@@ -35,6 +38,7 @@ export default function OperationCards() {
         </thead>
         <tbody>
           {operations.length &&
+          // ACA LIMITO LA CANTIDAD DE OPERACIONES QUE SE VAN A MOSTRAR EN LA TABLA
             operations.slice(0, 9).map((operation) => {
               if (operation.type === "Egreso") {
                 return (

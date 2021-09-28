@@ -1,3 +1,6 @@
+
+// ESTE REDUCER SOLO SE ENCARGAR DE UNA OPERACION
+
 import { SET_OPERATION } from "../actions";
 
 export default function operationReducer(state = {},action){

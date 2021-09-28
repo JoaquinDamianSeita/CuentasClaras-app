@@ -57,33 +57,7 @@
   background-color: rgb(247, 12, 12, 0.5);
 }
 
-.profile-box img {
-  display: block;
-  margin: auto auto;
-}
 
-.profile-div h2 {
-  display: block;
-  margin: auto auto;
-}
-.profile-div p {
-  display: block;
-  margin: auto auto;
-}
-
-.body-modal-info {
-  text-align: justify;
-}
-
-textarea {
-  resize: none;
-  height: 100px;
-}
-
-p,
-a {
-  font-family: "Open Sans", sans-serif;
-}
 
 .background-white {
   background-color: #ececec;
@@ -139,10 +113,3 @@ a {
   justify-content: center;
 }
 
-.userImg {
-  border-radius: 100px;
-  display: block;
-  height: 100px;
-  margin: 0 auto;
-  width: 100px;
-}

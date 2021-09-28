@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+
+// COMPONENTE QUE MUESTRA TODO EL ABM OPERACIONES
+
+import React, { useState } from "react";
 import OperationListTable from "../operations/OperationListTable";
 import OperationAdd from "../operations/OperationAdd";
 import { useHistory } from "react-router-dom";
@@ -22,7 +25,7 @@ export default function ABM() {
         className="btn btn-secondary d-block mx-auto mt-2 mb-5"
         onClick={() => history.push("/Home")}
       >
-        Volver al Home
+        Volver al Inicio
       </button>
       <button className="btn btn-primary btn-lg mb-5" onClick={handleOpenAdd}>
         Agregar Operación

@@ -15,6 +15,7 @@ class UserController {
         throw new Error("Hay campos vacios en la creación!");
       }
 
+      // Uso bcrypt para encriptar la contraseña del usuario antes de guardarlo en la db
       password = await bcrypt.hash(password, 10);
 
       const userCreated = {
@@ -23,6 +24,7 @@ class UserController {
         password: password,
       };
 
+      // Si sale todo bien envio un mensaje al cliente
       await UserDAO.createUser(userCreated);
       res.status(200).json(`User registered!`);
     } catch (error) {
@@ -33,14 +35,19 @@ class UserController {
     try {
       const user = await UserDAO.findUser(req.body.email);
 
+      /* Si existe un usuario con el mail comparo las contraseñas con bcrypt
+      lo bueno es que de esta forma nunca se revela cual es la contraseña del usuario
+      solo se compara con el algoritmo */
       if (user) {
         const iguales = await bcrypt.compare(req.body.password, user.password);
+        console.log(user.id);
 
+        /* Si coinciden envio un token al cliente con el id del usuario y su username  */
         if (iguales) {
           res
             .status(200)
             .json({
-              Token: await jwtTools.createToken(user),
+              Token: await jwtTools.createToken(user.id),
               Username: user.username,
             });
         } else {

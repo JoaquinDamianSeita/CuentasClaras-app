@@ -1,3 +1,6 @@
+
+//VISTA DE LA PAGINA EN /login CONTIENE SOLO EL FORMULARIO
+
 import React from "react";
 import Login from "../forms/Login";
 import { useHistory } from "react-router-dom";

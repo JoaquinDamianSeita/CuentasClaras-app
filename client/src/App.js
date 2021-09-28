@@ -38,6 +38,7 @@ function Main() {
       <Route exact path="/ABM" component={ABM} />
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/" component={HomeInit} />
+      <Route exact path="*" component={HomeInit} />
 
       {/* <ProtectedRoute exact path="/posts" component={PostsList} />
       <ProtectedRoute exact path="/profile" component={Profile} />

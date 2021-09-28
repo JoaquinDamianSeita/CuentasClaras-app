@@ -1,3 +1,6 @@
+
+// COMPONENTE DEL HOME CUANDO SE ABRE LA APP 
+
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { getToken } from "../../auth/auth-helper";

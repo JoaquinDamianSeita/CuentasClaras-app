@@ -1,3 +1,6 @@
+
+//COMPONENTE PARTE SUPERIOR DEL INICIO
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { getToken, getUserName, deleteToken } from "../../auth/auth-helper";
@@ -54,12 +57,12 @@ const Hero = () => {
           style={{ fontSize: "16px" }}
           className="lead mb-4 lead text-muted d-block"
         >
-          ¿No sos {userName}? ¡Para iniciar sesión con otro usuario click{" "}
+          ¿No sos {userName}? Para iniciar sesión con otro usuario click{" "}
           <a
             style={{ cursor: "pointer", textDecoration: "underline" }}
             onClick={() => history.push("/login")}
           >
-            aquí!
+            aquí
           </a>
         </small>
 

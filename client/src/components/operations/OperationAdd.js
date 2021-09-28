@@ -1,3 +1,5 @@
+//COMPONENTE ENCARGADO DE AGREGAR OPERACIONES
+
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -7,8 +9,12 @@ import { useHistory } from "react-router-dom";
 import { getToken, deleteToken } from "../../auth/auth-helper";
 
 export default function OperationAdd(props) {
+  //obtengo el token del usuario
   const userToken = getToken();
+
+  //para redirigir a los usuarios
   const history = useHistory();
+
   let initialState = {
     amount: 0,
     concept: "",
@@ -28,6 +34,7 @@ export default function OperationAdd(props) {
     setFields({ ...operation, [event.target.name]: event.target.value });
   }
 
+  //Mini componentes para alternar las opciones de las categorias
   function CategoriasIngresos() {
     return (
       <select
@@ -88,23 +95,33 @@ export default function OperationAdd(props) {
     );
   }
 
+  //-------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------
+
+  //Aca manejo el submit del formulario
   async function handleSubmit(event) {
     event.preventDefault();
+
+    //verifico los valores antes de enviar la peticion
     if (
       !operation.amount ||
       !operation.concept ||
-      operation.type === 0 ||
-      !operation.categoryId === null
+      operation.type === "0" ||
+      operation.categoryId === "Seleccionar la categoria" ||
+      operation.categoryId === 0
     ) {
-      alert("Debes completar todos los campos para continuar.");
+      return alert("Debes completar todos los campos para continuar.");
     }
+
+    //compruebo que todo tenga algun valor y paso a hacer el post
     if (
       operation.amount &&
       operation.concept &&
       operation.type &&
       operation.categoryId
     ) {
-      return axios
+      return await axios
         .post(
           "/api/operations",
           {
@@ -115,6 +132,7 @@ export default function OperationAdd(props) {
               categoryId: operation.categoryId,
             },
           },
+          //aca va el token del usuario para autorizar la operacion
           {
             headers: {
               Authorization: userToken,
@@ -122,11 +140,14 @@ export default function OperationAdd(props) {
           }
         )
         .then((response) => {
+          /* Si hay un error en la peticion debe ser por el token, asi que lo borro
+          y el usuario debe iniciar sesion otra vez. */
           if (response.data.error) {
             alert("Ocurrio un error debes iniciar sesion nuevamente");
             deleteToken();
             history.push("/login");
           } else {
+            /* Si no error hay agrego la operacion al store de las operaciones */
             console.log(response.data);
             dispatch(addOperation(response.data));
             props.handleCloseAdd();
@@ -134,6 +155,7 @@ export default function OperationAdd(props) {
           }
         })
         .catch((err) => {
+          /* Cualquier otro error lo manejo entra aca */
           console.log(err);
           alert(
             `No estas autorizado a realizar esta acción! ${err} Enviar un mensaje a joaquindamianseita@gmail.com`
@@ -198,6 +220,8 @@ export default function OperationAdd(props) {
             </div>
             <div className="form-group">
               <label className="form-label">Categoría:</label>
+
+              {/* Aca muestro las categorias disponibles segun el tipo de operacion a realizar */}
               <div className="mb-3">
                 {operation.type == 0 ? <SelectorDisabled /> : null}
                 {operation.type === "Ingreso" ? <CategoriasIngresos /> : null}
