@@ -28,8 +28,6 @@ export default function Register(props) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    console.log(user);
-
     if (user.email && user.password && user.username) {
       return axios
         .post("/api/users/register", {
