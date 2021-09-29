@@ -104,6 +104,15 @@ And
 
 ### `npm start`
 
+<h1>IMPORTANT INFORMATION</h1>
+
+* On "./database/db/dbConnection" line 29 ".sync({ force: true })"
+The true value creates the tables the first time we start the app. Then we must change it to false.
+
+* On "./database/db/dbConnection" line 29 ".sync({ force: false })"
+If we don't make this change, every time the app starts it will delete all the data from the tables.
+
+
 
 
 ## Release History
