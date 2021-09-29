@@ -26,7 +26,7 @@ exports.GetConnected = async () => {
   // Force true: DROP TABLES
   
   sequelize
-    .sync({ force: true })
+    .sync({ force: false })
     .then(() => {
       console.log("Nos hemos conectado a la base de datos");
     })
