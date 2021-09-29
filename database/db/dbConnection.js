@@ -24,8 +24,9 @@ const Categories = [
 
 exports.GetConnected = async () => {
   // Force true: DROP TABLES
+  
   sequelize
-    .sync({ force: false })
+    .sync({ force: true })
     .then(() => {
       console.log("Nos hemos conectado a la base de datos");
     })

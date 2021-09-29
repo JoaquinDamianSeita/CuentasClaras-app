@@ -149,6 +149,7 @@ export default function OperationInfo(props) {
           onHide={props.handleCloseEdit}
           backdrop="static"
           keyboard={false}
+          centered
         >
           <Modal.Header closeButton className="background-black">
             <Modal.Title>{operation.type}</Modal.Title>
