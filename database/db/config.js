@@ -2,7 +2,7 @@
 // ESTE ARCHIVO CONTIENE LAS CONFIGURACIONES DE LA BASE DE DATOS
 
 const {DB_PASSWORD, DB_USERNAME, DB_NAME, DB_HOST} = require("../../config/globals");
-console.log(DB_PASSWORD,DB_USERNAME, DB_NAME, DB_HOST );
+
 
 module.exports = {
     database: {
