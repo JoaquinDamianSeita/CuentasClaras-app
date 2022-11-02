@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "client", "build")));
 app.use("/api", apiRouter);
 
 app.get('*', function (req, res) {
-  const index = path.join(__dirname, 'build', 'index.html');
+  const index = path.join(__dirname, 'client', 'public', 'index.html');
   res.sendFile(index);
 });
 
